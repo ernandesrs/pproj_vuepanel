@@ -10,6 +10,10 @@ export default {
 
 
         return {}
+    },
+
+    created() {
+        this.$store.commit("pageTitle", "Criar uma conta");
     }
 }
 </script>

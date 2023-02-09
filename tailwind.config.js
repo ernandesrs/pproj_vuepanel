@@ -21,9 +21,9 @@ module.exports = {
         'light': colors.slate[200],
         'light-dark': colors.slate[300],
 
-        'dark-light': colors.teal[300],
-        'dark': colors.teal[500],
-        'dark-dark': colors.teal[700],
+        'dark-light': colors.gray[700],
+        'dark': colors.gray[800],
+        'dark-dark': colors.gray[900],
       }
     },
   },
