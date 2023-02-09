@@ -1,5 +1,10 @@
 <template>
-    <RouterView />
+    <div>
+        {{ $store.state.page.title }}
+    </div>
+    <div>
+        <RouterView />
+    </div>
 </template>
 
 <script>
