@@ -1,5 +1,5 @@
 <template>
-    <Component :is="tag" :to="to" :href="url" :title="title" :target="target"
+    <Component :is="tag" v-bind="props"
         class="inline-flex flex-wrap items-center justify-center">
         <IconElem v-if="icon && !iconEnd" :icon="icon" />
         <span class="inline-block" :class="[icon ? (iconEnd ? 'mr-2' : 'ml-2') : '']">
@@ -48,6 +48,26 @@ export default {
     computed: {
         tag() {
             return this.to ? 'RouterLink' : this.url ? 'a' : 'button';
+        },
+        props() {
+            let linkProps = {
+                title: this.title ?? this.text,
+                target: this.target
+            };
+
+            if (this.to) {
+                linkProps = {
+                    ...linkProps,
+                    to: this.to
+                };
+            } else {
+                linkProps = {
+                    ...linkProps,
+                    href: this.url
+                };
+            }
+
+            return linkProps;
         }
     },
 }
