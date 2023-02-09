@@ -10,7 +10,12 @@ export default {
 
 
         return {}
-    }
+    },
+
+    created() {
+        this.$store.commit("pageTitle", "Esquecia a senha");
+        this.$store.commit("pageIcon", "bi bi-shield-lock");
+    },
 }
 </script>
 

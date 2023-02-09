@@ -10,6 +10,11 @@ export default {
 
 
         return {}
+    },
+
+    created() {
+        this.$store.commit("pageTitle", "Atualizar senha");
+        this.$store.commit("pageIcon", "bi bi-check-circle");
     }
 }
 </script>

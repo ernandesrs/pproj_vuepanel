@@ -14,6 +14,7 @@ export default {
 
     created() {
         this.$store.commit("pageTitle", "Criar uma conta");
+        this.$store.commit("pageIcon", "bi bi-person-circle");
     }
 }
 </script>
