@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,7 +7,25 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary-light': colors.blue[300],
+        'primary': colors.blue[500],
+        'primary-dark': colors.blue[700],
+
+        'secondary-light': colors.blue[300],
+        'secondary': colors.blue[500],
+        'secondary-dark': colors.blue[700],
+
+        'light-light': colors.slate[100],
+        'light': colors.slate[200],
+        'light-dark': colors.slate[300],
+
+        'dark-light': colors.teal[300],
+        'dark': colors.teal[500],
+        'dark-dark': colors.teal[700],
+      }
+    },
   },
   plugins: [],
 }
