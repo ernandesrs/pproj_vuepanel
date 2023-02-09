@@ -9,23 +9,17 @@
                 <div class="subtitle">
                     <p v-if="$route.name === 'auth.login'">
                         Ou
-                        <RouterLink :to="{
-                            name: 'auth.register'
-                        }">crie uma conta</RouterLink> agora mesmo.
+                        <LinkElem :to="{ name: 'auth.register' }" text="crie uma conta" />
+                        agora mesmo.
                     </p>
                     <p v-if="$route.name === 'auth.register'">
                         Ou
-                        <RouterLink :to="{
-                            name: 'auth.login'
-                        }">acesse uma conta existente</RouterLink>.
+                        <LinkElem :to="{ name: 'auth.login' }" text="acesse uma conta" />
+                        existente.
                     </p>
                     <p v-if="$route.name === 'auth.forget'">
-                        <RouterLink :to="{
-                            name: 'auth.login'
-                        }">Fazer login</RouterLink> |
-                        <RouterLink :to="{
-                            name: 'auth.login'
-                        }">Criar conta</RouterLink>
+                        <LinkElem :to="{ name: 'auth.login' }" text="Fazer login" /> |
+                        <LinkElem :to="{ name: 'auth.register' }" text="Criar conta" />
                     </p>
                     <p v-if="$route.name === 'auth.update-password'">
                         Informe e confirme sua nova senha
@@ -40,12 +34,13 @@
 <script>
 
 import IconElem from '../components/IconElem.vue';
+import LinkElem from '../components/LinkElem.vue';
 
 export default {
+    components: { IconElem, LinkElem },
     setup() {
         return {};
     },
-    components: { IconElem }
 }
 </script>
 
