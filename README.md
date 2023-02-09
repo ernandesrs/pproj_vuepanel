@@ -1,6 +1,8 @@
 # vuepanel
 
-This template should help get you started developing with Vue 3 in Vite.
+* This template should help get you started developing with Vue 3 in Vite. *
+
+Painel em Vue JS + Tailwind CSS + Bootstrap Icons
 
 ## Recommended IDE Setup
 
