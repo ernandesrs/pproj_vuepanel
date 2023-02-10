@@ -14,7 +14,7 @@
             name: 'password',
             type: 'password'
         }" label="Senha" v-model="form.password" :error-message="form.errors.password" />
-        <p class="pt-2 pb-3 text-sm text-right text-primary">
+        <p class="py-1 text-sm text-right text-primary">
             <LinkElem text="Eu esqueci a senha" :to="{ name: 'auth.forget' }" />
         </p>
     </div>

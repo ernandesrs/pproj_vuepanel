@@ -60,17 +60,17 @@ a {
 }
 
 .wrap-box {
-    @apply w-full bg-white bg-opacity-5 py-5 px-6 shadow-xl rounded;
+    @apply w-full bg-white bg-opacity-5 py-6 px-6 shadow-xl rounded;
 
     @apply sm:max-w-[400px];
 }
 
 .wrap-box>.box-header {
-    @apply flex flex-col justify-center items-center text-center mb-4;
+    @apply flex flex-col justify-center items-center text-center;
 }
 
 .wrap-box>.box-header>.icon {
-    @apply w-12 h-12 flex items-center justify-center bg-primary rounded-md text-light text-2xl mb-3;
+    @apply w-12 h-12 flex items-center justify-center bg-primary rounded-md text-light text-2xl mb-1;
 }
 
 .wrap-box>.box-header>.title {
@@ -82,6 +82,6 @@ a {
 }
 
 .wrap-box>.box-body {
-    @apply bg-transparent;
+    @apply bg-transparent pt-5;
 }
 </style>
