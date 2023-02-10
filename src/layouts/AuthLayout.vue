@@ -62,7 +62,7 @@ a {
 .wrap-box {
     @apply w-full bg-white bg-opacity-5 py-6 px-6 shadow-xl rounded;
 
-    @apply sm:max-w-[400px];
+    @apply sm:max-w-[400px] md:max-w-[500px];
 }
 
 .wrap-box>.box-header {

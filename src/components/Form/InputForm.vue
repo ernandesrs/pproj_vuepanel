@@ -1,6 +1,11 @@
 <template>
-    <input :type="type" :disabled="disabled" :readonly="readonly" v-model="value" :id="id"
-        :name="name" />
+    <input v-if="type !== 'select'" :type="type" :disabled="disabled" :readonly="readonly"
+        v-model="value" :id="id" :name="name" />
+
+    <select v-else v-model="value">
+        <option v-for="option in options" :value="option.value" v-html="option.text">
+        </option>
+    </select>
 </template>
 
 <script>
@@ -9,6 +14,10 @@ export default {
         modelValue: {
             type: String,
             default: null
+        },
+        options: {
+            type: Array,
+            default: []
         },
         id: {
             type: String,

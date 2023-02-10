@@ -5,7 +5,7 @@
             :class="['custom-label', focused ? 'custom-label-focused' : 'custom-label-not-focused']" />
         <InputForm @focusin="inputFocusIn" @focusout="inputFocusOut"
             :class="['custom-input', focused ? 'custom-input-focused' : '']"
-            v-model="value" v-bind="attrs" />
+            v-model="value" v-bind="attrs" :options="options" />
     </div>
     <small v-if="errorMessage" class="text-red-600" v-html="errorMessage"></small>
 </template>
@@ -33,6 +33,10 @@ export default {
         errorMessage: {
             type: String,
             default: null
+        },
+        options: {
+            type: Array,
+            default: []
         }
     },
     data() {
@@ -68,7 +72,11 @@ export default {
 }
 
 .custom-input-group-invalid {
-    @apply border-red-600 text-red-600;
+    @apply border-red-600;
+}
+
+.custom-input-group-invalid .custom-label {
+    @apply text-red-600;
 }
 
 .custom-label {
