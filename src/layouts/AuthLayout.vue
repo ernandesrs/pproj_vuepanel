@@ -26,7 +26,9 @@
                     </p>
                 </div>
             </div>
-            <RouterView />
+            <div class="box-body">
+                <RouterView />
+            </div>
         </div>
     </div>
 </template>
@@ -77,5 +79,9 @@ a {
 
 .wrap-box>.box-header>.subtitle {
     @apply text-lg text-gray-500 font-normal;
+}
+
+.wrap-box>.box-body {
+    @apply bg-transparent;
 }
 </style>
