@@ -19,6 +19,7 @@ import DefaultButton from '../../components/Button/DefaultButton.vue';
 import InputGroupForm from '../../components/Form/InputGroupForm.vue';
 
 export default {
+    components: { InputGroupForm, DefaultButton },
     data() {
         return {
             form: {
@@ -33,8 +34,7 @@ export default {
     created() {
         this.$store.commit("pageTitle", "Esquecia a senha");
         this.$store.commit("pageIcon", "bi bi-shield-lock");
-    },
-    components: { InputGroupForm, DefaultButton }
+    }
 }
 </script>
 
