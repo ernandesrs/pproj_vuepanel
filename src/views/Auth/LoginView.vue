@@ -20,7 +20,7 @@
     </div>
 
     <div class="text-center">
-        <DefaultButton @click="form.submitting=true" text="Fazer login"
+        <DefaultButton text="Fazer login"
             icon="bi bi-check-lg" :loading="form.submitting" />
     </div>
 
