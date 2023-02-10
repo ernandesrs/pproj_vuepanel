@@ -82,6 +82,6 @@ a {
 }
 
 .wrap-box>.box-body {
-    @apply bg-transparent pt-5;
+    @apply bg-transparent pt-5 pb-2 px-2;
 }
 </style>
