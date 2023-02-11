@@ -8,7 +8,7 @@ const store = createStore({
                 user: null
             },
             message: {
-                variant: null,
+                variant: 'light',
                 message: null,
                 duration: 7.5,
                 type: 'fixed'
@@ -45,7 +45,7 @@ const store = createStore({
         authUser: state => {
             return state.auth.user;
         },
-        message: state => {
+        getMessage: state => {
             return state.message;
         },
     }

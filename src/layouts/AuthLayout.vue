@@ -27,6 +27,7 @@
                 </div>
             </div>
             <div class="box-body">
+                <AlertElem />
                 <RouterView />
             </div>
         </div>
@@ -35,14 +36,15 @@
 
 <script>
 
+import AlertElem from '../components/AlertElem.vue';
 import IconElem from '../components/IconElem.vue';
 import LinkElem from '../components/LinkElem.vue';
 
 export default {
-    components: { IconElem, LinkElem },
+    components: { IconElem, LinkElem, AlertElem },
     setup() {
         return {};
-    },
+    }
 }
 </script>
 
