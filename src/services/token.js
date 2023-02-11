@@ -9,7 +9,7 @@ export default {
      */
     add: (token, expiration_in_minutes = 60) => {
         cookie.add(AUTH_TOKEN_KEY, token, {
-            expires: (expiration / 60) / 24
+            expires: (expiration_in_minutes / 60) / 24
         });
     },
 

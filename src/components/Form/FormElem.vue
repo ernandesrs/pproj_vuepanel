@@ -38,7 +38,7 @@ export default {
                 if (this.callbacks?.success)
                     this.callbacks.success(resp);
             }).catch((resp) => {
-                let errors = resp.response.data?.errors ?? [];
+                let errors = resp.response?.data?.errors ?? [];
 
                 (Object.entries(errors)).map((error) => {
                     this.form.errors[error[0]] = error[1][0];

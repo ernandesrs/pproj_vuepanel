@@ -13,6 +13,6 @@ app.config.globalProperties.$store = store
 app.config.globalProperties.$axios = axios
 app.config.globalProperties.$cookie = cookie
 
-app.use(router)
+app.use(router).use(store)
 
 app.mount('#app')

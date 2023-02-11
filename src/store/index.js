@@ -4,6 +4,9 @@ import { createStore } from 'vuex'
 const store = createStore({
     state() {
         return {
+            auth: {
+                user: null
+            },
             page: {
                 icon: null,
                 title: null,
@@ -12,6 +15,9 @@ const store = createStore({
         }
     },
     mutations: {
+        addAuthUser(state, user) {
+            state.auth.user = user;
+        },
         pageIcon(state, icon) {
             state.page.icon = icon;
         },
@@ -21,6 +27,11 @@ const store = createStore({
         pageSubtitle(state, subtitle) {
             state.page.subtitle = subtitle;
         },
+    },
+    getters: {
+        authUser: state => {
+            return state.auth.user;
+        }
     }
 })
 

@@ -33,6 +33,7 @@
 
 <script>
 
+import token from '../../services/token';
 import InputGroupForm from '../../components/Form/InputGroupForm.vue';
 import DefaultButton from '../../components/Button/DefaultButton.vue';
 import LinkElem from '../../components/LinkElem.vue';
@@ -56,8 +57,11 @@ export default {
     },
     methods: {
         success(response) {
-            console.log("success");
-            console.log(response)
+            // login process: save api token on cookie, add authenticated user on vuex store
+            token.add(response.data.access.full, response.data.access.expire_in_minutes);
+            this.$store.commit("addAuthUser", response.data.user);
+
+            this.$router.push({ name: "app.home" });
         }
     },
 }
