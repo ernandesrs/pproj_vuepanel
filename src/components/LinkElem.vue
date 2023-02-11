@@ -36,6 +36,10 @@ export default {
             type: Boolean,
             default: false
         },
+        type: {
+            type: String,
+            default: "button"
+        },
         title: {
             type: String,
             default: null
@@ -60,11 +64,16 @@ export default {
                     ...linkProps,
                     to: this.to
                 };
-            } else {
+            } else if (this.url) {
                 linkProps = {
                     ...linkProps,
                     href: this.url
                 };
+            } else {
+                linkProps = {
+                    ...linkProps,
+                    type: this.type
+                }
             }
 
             return linkProps;

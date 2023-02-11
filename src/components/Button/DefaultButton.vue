@@ -3,7 +3,7 @@
         class="button" :class="[
             ('button-' + variant),
             (loading ? 'animate-pulse' : '')
-        ]" :disabled="disabled || loading" />
+        ]" :disabled="disabled || loading" :type="type" />
 </template>
 
 <script>
@@ -15,6 +15,10 @@ export default {
         LinkElem,
     },
     props: {
+        type: {
+            type: String,
+            default: 'submit'
+        },
         variant: {
             type: String,
             default: 'primary'
