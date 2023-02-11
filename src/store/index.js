@@ -7,6 +7,12 @@ const store = createStore({
             auth: {
                 user: null
             },
+            message: {
+                variant: null,
+                message: null,
+                duration: 7.5,
+                type: 'fixed'
+            },
             page: {
                 icon: null,
                 title: null,
@@ -17,6 +23,13 @@ const store = createStore({
     mutations: {
         addAuthUser(state, user) {
             state.auth.user = user;
+        },
+        addMessage(state, message) {
+            state.message = {
+                ...state.message,
+                ...message,
+                time: (new Date()).getTime()
+            };
         },
         pageIcon(state, icon) {
             state.page.icon = icon;
@@ -31,7 +44,10 @@ const store = createStore({
     getters: {
         authUser: state => {
             return state.auth.user;
-        }
+        },
+        message: state => {
+            return state.message;
+        },
     }
 })
 

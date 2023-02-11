@@ -5,6 +5,9 @@
 </template>
 
 <script>
+
+import messages from '../../services/messages';
+
 export default {
     props: {
         action: {
@@ -42,6 +45,11 @@ export default {
 
                 (Object.entries(errors)).map((error) => {
                     this.form.errors[error[0]] = error[1][0];
+                });
+
+                this.$store.commit('addMessage', {
+                    variant: 'danger',
+                    message: messages.get(resp.response?.data?.error)
                 });
 
                 if (this.callbacks?.fail)
