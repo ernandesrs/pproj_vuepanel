@@ -1,6 +1,8 @@
 <template>
 
-    <FormElem action="/auth/login" method="post" :data="form">
+    <FormElem action="/auth/login" method="post" :data="form" :callbacks="{
+        success: success
+    }">
         <div class="mb-3">
             <InputGroupForm :attrs="{
                 id: 'email',
@@ -51,7 +53,13 @@ export default {
     created() {
         this.$store.commit("pageIcon", "bi bi-box-arrow-in-right");
         this.$store.commit("pageTitle", "Acessar conta");
-    }
+    },
+    methods: {
+        success(response) {
+            console.log("success");
+            console.log(response)
+        }
+    },
 }
 </script>
 
