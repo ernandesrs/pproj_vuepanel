@@ -42,7 +42,10 @@ export default {
     },
     methods: {
         success() {
-            // 
+            this.$store.commit("addMessage", {
+                variant: "success",
+                message: "Um link de recuperação foi enviado para o seu e-mail."
+            });
         }
     },
 }
