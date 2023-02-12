@@ -1,20 +1,34 @@
 <template>
     <template v-if="alert.message">
-        <div class="alert" :class="['alert-' + alert.type, 'alert-' + alert.variant]">
-            {{ alert.message }}
+        <div class="alert" :class="['alert-' + type, 'alert-' + alert.variant]">
+            <div class="alert-body">
+                <p class="alert-content">
+                    {{ alert.message }}
+                </p>
+                <div @click="close" class="alert-close">
+                    <IconElem icon="bi bi-x-lg" />
+                </div>
+            </div>
         </div>
     </template>
 </template>
 
 <script>
 
+import IconElem from './IconElem.vue';
+
 export default {
+    components: { IconElem },
+    props: {
+        type: {
+            type: String,
+            default: 'fixed'
+        },
+    },
     watch: {
         currentRoute(newRoute, oldRoute) {
             if (newRoute !== oldRoute && this.alert.message) {
-                this.$store.commit("addMessage", {
-                    message: null
-                });
+                this.clear();
             }
         }
     },
@@ -25,18 +39,45 @@ export default {
         currentRoute() {
             return this.$route.name;
         }
-    }
+    },
+    methods: {
+        close() {
+            this.clear();
+        },
+        clear() {
+            this.$store.commit("addMessage", {
+                message: null
+            });
+        }
+    },
 }
 
 </script>
 
 <style lang="css" scoped>
 .alert {
-    @apply px-5 py-3 border shadow-sm text-sm text-center cursor-default;
+    @apply flex flex-col px-5 py-3 border shadow-sm text-sm text-left cursor-default relative;
 }
 
 .alert-fixed {
     @apply mb-5;
+}
+
+.alert-floating {
+    @apply fixed top-6 right-5 z-50 shadow-md max-w-xs;
+    width: calc(100% - 2.25rem);
+}
+
+.alert-body {
+    @apply flex items-center;
+}
+
+.alert-body>.alert-content {
+    @apply w-full;
+}
+
+.alert-body>.alert-close {
+    @apply cursor-pointer;
 }
 
 .alert-light {
