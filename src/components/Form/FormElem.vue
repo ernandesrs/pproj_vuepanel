@@ -34,7 +34,6 @@ export default {
     },
     methods: {
         submit() {
-            this.form.errors = {};
             this.form.submitting = true;
 
             this.$axios.request(this.action, this.data, this.method).then((resp) => {
@@ -42,6 +41,8 @@ export default {
                     this.callbacks.success(resp);
             }).catch((resp) => {
                 let errors = resp.response?.data?.errors ?? [];
+
+                this.form.errors = {};
 
                 (Object.entries(errors)).map((error) => {
                     this.form.errors[error[0]] = error[1][0];

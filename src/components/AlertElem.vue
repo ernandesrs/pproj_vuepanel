@@ -1,6 +1,7 @@
 <template>
-    <template v-if="alert.message">
-        <div class="alert" :class="['alert-' + type, 'alert-' + alert.variant]">
+    <Transition name="animation" @after-enter="onAfterEnter">
+        <div v-if="alert.message" class="alert"
+            :class="['alert-' + type, 'alert-' + alert.variant]">
             <div class="alert-body">
                 <p class="alert-content">
                     {{ alert.message }}
@@ -10,7 +11,7 @@
                 </div>
             </div>
         </div>
-    </template>
+    </Transition>
 </template>
 
 <script>
@@ -25,15 +26,38 @@ export default {
             default: 'fixed'
         },
     },
+    data() {
+        return {
+            timerHandler: null,
+            alert: {}
+        }
+    },
     watch: {
         currentRoute(newRoute, oldRoute) {
             if (newRoute !== oldRoute && this.alert.message) {
                 this.clear();
             }
+        },
+        alertFromStore: {
+            deep: true,
+            handler(nv, ov) {
+                if (!this.alert.time) {
+                    this.alert = nv;
+                } else {
+                    if (this.alert.message) {
+                        this.alert.message = null;
+                        setTimeout(() => {
+                            this.alert = nv;
+                        }, 500);
+                    } else {
+                        this.alert = nv;
+                    }
+                }
+            }
         }
     },
     computed: {
-        alert() {
+        alertFromStore() {
             return this.$store.getters.getMessage;
         },
         currentRoute() {
@@ -45,9 +69,15 @@ export default {
             this.clear();
         },
         clear() {
-            this.$store.commit("addMessage", {
-                message: null
-            });
+            this.alert.message = null;
+        },
+        onAfterEnter() {
+            if (this.type !== 'fixed') {
+                this.$el.classList.add('bounce');
+                setTimeout(() => {
+                    this.$el.classList.remove('bounce');
+                }, 1000);
+            }
         }
     },
 }
@@ -55,6 +85,43 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.animation-enter-active {
+    @apply duration-200 ease-in;
+}
+
+.animation-leave-active {
+    @apply duration-500 ease-out;
+}
+
+.animation-enter-from,
+.animation-leave-to {
+    @apply opacity-0 -translate-y-2 scale-95;
+}
+
+.bounce {
+    animation: bounceAnimation .25s 1 ease-in-out;
+}
+
+@keyframes bounceAnimation {
+
+    20%,
+    60% {
+        transform: translateY(-6%);
+    }
+
+    40%,
+    80% {
+        transform: translateY(12%);
+    }
+
+    90%,
+    95%,
+    100%,
+    5% {
+        transform: translateY(-12%);
+    }
+}
+
 .alert {
     @apply flex flex-col px-5 py-3 border shadow-sm text-sm text-left cursor-default relative;
 }

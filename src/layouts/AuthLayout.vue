@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="box-body">
-                <AlertElem />
+                <AlertElem type="floating" />
                 <RouterView />
             </div>
         </div>
