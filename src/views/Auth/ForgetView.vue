@@ -42,7 +42,7 @@ export default {
     },
     methods: {
         success() {
-            this.$store.commit("addMessage", {
+            this.$alerts.add({
                 variant: "success",
                 message: "Um link de recuperação foi enviado para o seu e-mail."
             });

@@ -6,8 +6,6 @@
 
 <script>
 
-import messages from '../../services/messages';
-
 export default {
     props: {
         action: {
@@ -48,10 +46,7 @@ export default {
                     this.form.errors[error[0]] = error[1][0];
                 });
 
-                this.$store.commit('addMessage', {
-                    variant: 'danger',
-                    message: messages.get(resp.response?.data?.error)
-                });
+                this.$alerts.addError(resp.response?.data?.error);
 
                 if (this.callbacks?.fail)
                     this.callbacks.fail(resp);

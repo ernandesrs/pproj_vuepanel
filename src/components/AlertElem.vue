@@ -34,8 +34,12 @@ export default {
     },
     watch: {
         currentRoute(newRoute, oldRoute) {
-            if (newRoute !== oldRoute && this.alert.message) {
-                this.clear();
+            if (newRoute !== oldRoute) {
+                if (this.alert.message) {
+                    this.clear();
+                }
+
+                this.$alerts.flash();
             }
         },
         alertFromStore: {

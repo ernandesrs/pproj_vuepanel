@@ -114,6 +114,10 @@ export default {
     },
     methods: {
         success() {
+            this.$alerts.add({
+                message: "Registrado! Acesse seu e-mail e confirme a criação da sua conta.",
+                variant: "success"
+            }, true);
             this.$router.push({ name: "auth.login" });
         }
     },
