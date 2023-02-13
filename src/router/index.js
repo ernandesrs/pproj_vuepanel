@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import middleware from '../services/middleware'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,21 +16,25 @@ const router = createRouter({
         {
           path: 'login',
           name: 'auth.login',
+          beforeEnter: middleware.redirectIfAuthenticated,
           component: () => import('../views/Auth/LoginView.vue')
         },
         {
           path: 'register',
           name: 'auth.register',
+          beforeEnter: middleware.redirectIfAuthenticated,
           component: () => import('../views/Auth/RegisterView.vue')
         },
         {
           path: 'forget',
           name: 'auth.forget',
+          beforeEnter: middleware.redirectIfAuthenticated,
           component: () => import('../views/Auth/ForgetView.vue')
         },
         {
           path: 'update-password',
           name: 'auth.update-password',
+          beforeEnter: middleware.redirectIfAuthenticated,
           component: () => import('../views/Auth/UpdatePasswordView.vue')
         }
       ]
@@ -37,6 +42,7 @@ const router = createRouter({
     {
       path: '/app',
       component: () => import('../layouts/AppLayout.vue'),
+      beforeEnter: middleware.redirectIfUnauthenticated,
       children: [
         {
           path: '',
@@ -53,6 +59,7 @@ const router = createRouter({
     {
       path: '/admin',
       component: () => import('../views/Admin/HomeView.vue'),
+      beforeEnter: middleware.redirectIfUnauthenticated,
       children: [
         {
           path: '',

@@ -45,6 +45,9 @@ const store = createStore({
         authUser: state => {
             return state.auth.user;
         },
+        getAuthUser: state => {
+            return state.auth.user;
+        },
         getMessage: state => {
             return state.message;
         },
