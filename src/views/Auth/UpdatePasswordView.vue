@@ -59,6 +59,10 @@ export default {
     },
     methods: {
         success() {
+            this.$alerts.add({
+                "message": "Senha atualizada com sucesso, faça seu login.",
+                "variant": "success"
+            }, true);
             this.$router.push({ name: "auth.login" });
         }
     },

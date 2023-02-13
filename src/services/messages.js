@@ -3,7 +3,8 @@ const errors = {
     InvalidDataException: 'Um ou mais dados informados são inválidos.',
 
     // auth
-    LoginFailException: 'E-mail e/ou senha inválidos ou não existem.'
+    LoginFailException: 'E-mail e/ou senha inválidos ou não existem.',
+    VerificationTokenInvalidException: 'Token de verificação é inválido. Acesse sua conta e solicite um novo link.',
 };
 
 export default {

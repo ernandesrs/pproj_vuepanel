@@ -2,7 +2,7 @@
     <div class="wrap">
         <div class="wrap-box">
             <div class="box-header">
-                <IconElem :icon="$store.state.page.icon" />
+                <IconElem v-if="$store.state.page.icon" :icon="$store.state.page.icon" />
                 <div class="title">
                     {{ $store.state.page.title }}
                 </div>

@@ -7,6 +7,9 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      beforeEnter: (to, from, next) => {
+        next({ name: 'app.home' });
+      },
       component: () => import('../views/HomeView.vue')
     },
     {
@@ -36,6 +39,11 @@ const router = createRouter({
           name: 'auth.update-password',
           beforeEnter: middleware.redirectIfAuthenticated,
           component: () => import('../views/Auth/UpdatePasswordView.vue')
+        },
+        {
+          path: 'verify-account',
+          name: 'auth.verify-account',
+          component: () => import('../views/Auth/VerifyAccountView.vue')
         }
       ]
     },
