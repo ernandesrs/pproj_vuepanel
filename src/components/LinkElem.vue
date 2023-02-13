@@ -1,11 +1,14 @@
 <template>
     <Component :is="tag" v-bind="props"
         class="inline-flex flex-wrap items-center justify-center">
-        <IconElem v-if="icon && !iconEnd" :icon="icon" />
-        <span class="inline-block" :class="[icon ? (iconEnd ? 'mr-2' : 'ml-2') : '']">
-            {{ text }}
-        </span>
-        <IconElem v-if="icon && iconEnd" :icon="icon" />
+        <template v-if="text || icon">
+            <IconElem v-if="icon && !iconEnd" :icon="icon" />
+            <span class="inline-block" :class="[icon ? (iconEnd ? 'mr-2' : 'ml-2') : '']">
+                {{ text }}
+            </span>
+            <IconElem v-if="icon && iconEnd" :icon="icon" />
+        </template>
+        <slot />
     </Component>
 </template>
 
