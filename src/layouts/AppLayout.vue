@@ -74,6 +74,7 @@
             </section>
 
             <div class="main-content">
+                <AlertElem type="floating" />
                 <RouterView />
             </div>
         </main>
@@ -86,11 +87,12 @@
 import IconElem from '../components/IconElem.vue';
 import LinkElem from '../components/LinkElem.vue';
 import DropdownElem from '../components/Dropdown/DropdownElem.vue';
+import AlertElem from '../components/AlertElem.vue';
 
 const MOBILE_WIDTH = 768;
 
 export default {
-    components: { IconElem, LinkElem, DropdownElem },
+    components: { IconElem, LinkElem, DropdownElem, AlertElem },
     data() {
         return {
             sidebar: {
