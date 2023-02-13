@@ -37,14 +37,39 @@
                 <div class="ml-auto">
 
                     <!-- profile -->
-                    <div class="flex items-center cursor-pointer">
-                        <!-- profile photo -->
-                        <div
-                            class="border px-2 w-7 h-7 rounded-full flex items-center justify-center overflow-hidden">
-                            E
-                        </div>
-                        <IconElem class="ml-2 text-xs" icon="bi bi-chevron-down" />
-                    </div>
+                    <DropdownElem>
+                        <!-- photo photo -->
+                        <template v-slot:button>
+                            <div
+                                class="border px-2 w-7 h-7 rounded-full flex items-center justify-center overflow-hidden">
+                                E
+                            </div>
+                        </template>
+
+                        <template v-slot:content>
+                            <div>
+                                <div class="flex flex-col items-center pt-2">
+                                    <div
+                                        class="border px-2 w-14 h-14 rounded-full flex items-center justify-center overflow-hidden">
+                                        E
+                                    </div>
+                                    <p class="text-lg font-semibod pt-2">
+                                        {{ $store.getters.getAuthUser.first_name }}
+                                        {{ $store.getters.getAuthUser.last_name }}
+                                    </p>
+                                    <p class="text-sm font-light pb-2">
+                                        {{ $store.getters.getAuthUser.email }}
+                                    </p>
+                                </div>
+
+                                <div class="pb-2 flex justify-center text-base">
+                                    <LinkElem text="Perfil" :to="{ name: 'app.profile' }"
+                                        class="px-3 py-1" />
+                                    <LinkElem text="Logout" class="px-3 py-1" />
+                                </div>
+                            </div>
+                        </template>
+                    </DropdownElem>
                 </div>
             </section>
 
@@ -60,11 +85,12 @@
 
 import IconElem from '../components/IconElem.vue';
 import LinkElem from '../components/LinkElem.vue';
+import DropdownElem from '../components/Dropdown/DropdownElem.vue';
 
 const MOBILE_WIDTH = 768;
 
 export default {
-    components: { IconElem, LinkElem },
+    components: { IconElem, LinkElem, DropdownElem },
     data() {
         return {
             sidebar: {
@@ -124,7 +150,7 @@ export default {
 }
 
 .main-bar {
-    @apply mb-3 flex items-center py-2;
+    @apply mb-3 flex items-center;
 }
 
 .main-content {
