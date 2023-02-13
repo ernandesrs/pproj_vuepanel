@@ -1,6 +1,6 @@
 <template>
     <div>
-        APP HOME
+        <p>APP HOME</p>
     </div>
 </template>
 
