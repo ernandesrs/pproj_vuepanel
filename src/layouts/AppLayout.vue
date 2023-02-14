@@ -48,7 +48,7 @@
 
                         <template v-slot:content>
                             <div>
-                                <div class="flex flex-col items-center pt-2">
+                                <div class="flex flex-col items-center pt-2 text-center">
                                     <div
                                         class="border px-2 w-14 h-14 rounded-full flex items-center justify-center overflow-hidden">
                                         E
