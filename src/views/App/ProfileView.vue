@@ -1,4 +1,23 @@
 <template>
+    <div class="flex flex-col justify-center items-center pt-2 pb-6 relative">
+        <div
+            class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 border-2 border-light-dark rounded-full flex items-center justify-center">
+            <img v-if="form.photo_url" class="w-full h-full rounded-full"
+                :src="form.photo_url" :alt="form.first_name">
+            <p v-else class="text-4xl sm:text-5xl md:text-6xl"
+                v-html="form.first_name[0]"></p>
+        </div>
+        <div class="relative flex gap-1 pt-2">
+            <DefaultButton @click="uploadButtonClick" icon="bi bi-upload"
+                variant="success" text="Nova foto" :loading="uploading" />
+            <DefaultButton @click="deleteButtonClick" v-if="form.photo_url"
+                icon="bi bi-trash" variant="danger" text="Excluir foto"
+                :loading="deleting" />
+            <input @change="uploadPhoto" ref="inputPhotoUpload" type="file" class="hidden"
+                accept="image/*" />
+        </div>
+    </div>
+
     <div class="flex justify-center">
         <div class="basis-full lg:basis-4/5 xl:basis-3/5">
             <FormElem action="/me/update" method="put" :data="form" :callbacks="{
@@ -89,6 +108,7 @@
 
 <script>
 
+import messages from '../../services/messages';
 import InputGroupForm from '../../components/Form/InputGroupForm.vue';
 import FormElem from '../../components/Form/FormElem.vue';
 import DefaultButton from '../../components/Button/DefaultButton.vue';
@@ -101,7 +121,9 @@ export default {
                 ...this.$store.getters.getAuthUser,
                 errors: {},
                 submitting: false
-            }
+            },
+            deleting: false,
+            uploading: false,
         }
     },
     methods: {
@@ -111,11 +133,51 @@ export default {
                 message: 'Seus dados foram atualizados com sucesso!',
                 variant: 'success'
             });
+        },
+        uploadButtonClick() {
+            this.$refs.inputPhotoUpload.click();
+        },
+        uploadPhoto(event) {
+            let data = new FormData();
+
+            data.append('photo', event.target.files[0]);
+
+            this.form.submitting = true;
+            this.uploading = true;
+            this.$axios.request('/me/photo-upload', data, 'post').then((resp) => {
+                this.$alerts.add({
+                    message: 'Sua foto foi atualizada com sucesso!',
+                    variant: 'success'
+                });
+                this.form.photo_url = resp.data.user.photo_url;
+            }).catch((resp) => {
+                let msg = messages.get(resp?.response?.data?.error);
+                this.$alerts.add({
+                    message: msg,
+                    variant: 'danger'
+                });
+            }).then(() => {
+                this.form.submitting = false;
+                this.uploading = false;
+            });
+        },
+        deleteButtonClick() {
+            if (!window.confirm('Tem certeza de que quer excluir sua foto?')) {
+                return;
+            }
+
+            this.deleting = true;
+            this.$axios.request('/me/photo-delete', {}, 'delete').then(() => {
+                this.form.photo_url = null;
+            }).catch(() => {
+            }).then(() => {
+                this.deleting = false;
+            });
         }
     },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 
 </style>
