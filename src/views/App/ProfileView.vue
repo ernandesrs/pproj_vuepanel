@@ -9,10 +9,10 @@
         </div>
         <div class="relative flex gap-1 pt-2">
             <DefaultButton @click="uploadButtonClick" icon="bi bi-upload"
-                variant="success" text="Nova foto" :loading="uploading" />
+                variant="success" text="Nova foto" :loading="uploading" size="small" />
             <DefaultButton @click="deleteButtonClick" v-if="form.photo_url"
                 icon="bi bi-trash" variant="danger" text="Excluir foto"
-                :loading="deleting" />
+                :loading="deleting" size="small" outlined />
             <input @change="uploadPhoto" ref="inputPhotoUpload" type="file" class="hidden"
                 accept="image/*" />
         </div>
