@@ -65,7 +65,10 @@
                                 <div class="pb-2 flex justify-center text-base">
                                     <LinkElem text="Perfil" :to="{ name: 'app.profile' }"
                                         class="px-3 py-1" />
-                                    <LinkElem text="Logout" class="px-3 py-1" />
+                                    <LinkElem @click="logout" text="Logout"
+                                        :icon="`${logouting ? 'bi bi-arrow-clockwise animate-spin' : ''}`"
+                                        class="px-3 py-1 text-red-400"
+                                        :loading="logouting" />
                                 </div>
                             </div>
                         </template>
@@ -84,6 +87,7 @@
 
 <script>
 
+import token from '../services/token';
 import IconElem from '../components/IconElem.vue';
 import LinkElem from '../components/LinkElem.vue';
 import DropdownElem from '../components/Dropdown/DropdownElem.vue';
@@ -98,7 +102,8 @@ export default {
             sidebar: {
                 show: false,
                 mobile: true
-            }
+            },
+            logouting: false
         }
     },
     created() {
@@ -124,6 +129,23 @@ export default {
     methods: {
         sidebarToggle() {
             this.sidebar.show = !this.sidebar.show;
+        },
+        logout() {
+            if (this.logouting) {
+                return;
+            }
+
+            this.logouting = true;
+            this.$axios.request('/auth/logout', {}, 'get').then(() => {
+                token.remove();
+                this.$router.push({
+                    name: 'auth.login'
+                });
+            }).catch(() => {
+                // 
+            }).then(() => {
+                this.logouting = false;
+            })
         }
     },
 }
