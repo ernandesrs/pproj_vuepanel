@@ -45,6 +45,13 @@ export default {
         monitorClickOutListener(event) {
             if (!this.$el.contains(event.target)) {
                 this.show = false;
+                return;
+            }
+
+            if (['a'].includes(event.target.localName)) {
+                // close dropdown on link click
+                this.show = false;
+                return;
             }
         },
         removeMonitorClickOut() {
