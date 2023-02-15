@@ -18,13 +18,17 @@
                 :class="{ 'sidebar-mobile': sidebar.mobile }">
 
                 <!-- header -->
-                <LinkElem class="flex flex-col items-center" :to="{ name: 'app.home' }">
+                <LinkElem class="flex flex-col items-center pb-3"
+                    :to="{ name: 'app.home' }">
                     <span
                         class="text-light-dark text-3xl font-bold tracking-wider">LAPI</span>
                     <span
                         class="text-lg text-light-light font-medium tracking-widest">ADMIN</span>
                 </LinkElem>
 
+                <div class="bg-dark bg-opacity-25 rounded-lg px-4 py-4 h-full">
+                    <NavGroup column class="h-full" :items="sidebar.navigation" />
+                </div>
             </aside>
         </Transition>
 
@@ -34,7 +38,25 @@
                     <IconElem icon="bi bi-list" />
                 </button>
 
-                <div class="ml-auto">
+                <div class="flex items-center ml-auto">
+                    <NavGroup class="mr-2" :items="[
+                        {
+                            text: 'Dashboard',
+                            title: 'Assinaturas',
+                            icon: 'bi bi-pie-chart',
+                            to: { name: 'app.home' },
+                            activeIn: ['app.home'],
+                            target: '_self'
+                        },
+                        {
+                            text: 'Assinaturas',
+                            title: 'Assinaturas',
+                            icon: 'bi bi-list',
+                            to: { name: 'app.subscriptions' },
+                            activeIn: ['app.subscriptions'],
+                            target: '_self'
+                        },
+                    ]" />
 
                     <!-- profile -->
                     <DropdownElem>
@@ -92,16 +114,52 @@ import IconElem from '../components/IconElem.vue';
 import LinkElem from '../components/LinkElem.vue';
 import DropdownElem from '../components/Dropdown/DropdownElem.vue';
 import AlertElem from '../components/AlertElem.vue';
+import NavGroup from '../components/Nav/NavGroup.vue';
 
 const MOBILE_WIDTH = 768;
 
 export default {
-    components: { IconElem, LinkElem, DropdownElem, AlertElem },
+    components: { IconElem, LinkElem, DropdownElem, AlertElem, NavGroup },
     data() {
         return {
             sidebar: {
                 show: false,
-                mobile: true
+                mobile: true,
+                navigation: [
+                    {
+                        text: 'Dashboard',
+                        title: 'Dashboard',
+                        icon: 'bi bi-pie-chart',
+                        to: { name: 'app.home' },
+                        target: '_self',
+                        activeIn: ['app.home']
+                    },
+                    {
+                        text: 'Assinaturas',
+                        title: 'Assinaturas',
+                        icon: 'bi bi-list',
+                        to: { name: 'app.subscriptions' },
+                        target: '_self',
+                        activeIn: ['app.subscriptions']
+                    },
+                    {
+                        text: 'Perfil',
+                        title: 'Perfil',
+                        icon: 'bi bi-person',
+                        to: { name: 'app.profile' },
+                        target: '_self',
+                        activeIn: ['app.profile'],
+                        li_class: 'mt-auto'
+                    },
+                    {
+                        text: 'Sair',
+                        title: 'Sair',
+                        icon: 'bi bi-box-arrow-left',
+                        target: '_self',
+                        a_class: 'text-red-500',
+                        clickEvent: this.logout
+                    }
+                ]
             },
             logouting: false
         }
@@ -145,7 +203,7 @@ export default {
                 // 
             }).then(() => {
                 this.logouting = false;
-            })
+            });
         }
     },
 }
