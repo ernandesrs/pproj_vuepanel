@@ -236,6 +236,6 @@ export default {
 }
 
 .main-content {
-    @apply px-4 py-4 bg-dark-light rounded-md flex-1;
+    @apply px-8 py-6 bg-dark-light rounded-md flex-1;
 }
 </style>
