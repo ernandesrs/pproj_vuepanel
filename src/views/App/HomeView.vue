@@ -13,12 +13,7 @@
                 pending: 'Aguardando pagamento',
                 active: 'Assinatura ativa',
                 ended: 'Assinatura vencida',
-            }[activeSubscription?.status]}`" :titleClass="{
-    'text-red-500': !activeSubscription || activeSubscription?.status == 'canceled',
-    'text-sky-300': activeSubscription?.status == 'pending',
-    'text-emerald-500': activeSubscription?.status == 'active',
-    'text-yellow-300': activeSubscription?.status == 'ended',
-}">
+            }[activeSubscription?.status]}`" :titleClass="theTitleClass">
                 <template v-slot:content>
                     <p class="text-sm" v-if="activeSubscription?.status == 'active'">Você
                         possui uma assinatura válida até {{ activeSubscription.ends_in }}
@@ -56,7 +51,32 @@ export default {
     },
     mounted() {
         this.loadingContent = false;
-    }
+    },
+    computed: {
+        theTitleClass() {
+            if (!this.activeSubscription) {
+                return 'text-red-500';
+            }
+
+            let style = '';
+            switch (this.activeSubscription.status) {
+                case 'canceled':
+                    style = 'text-red-500'
+                    break;
+                case 'pending':
+                    style = 'text-sky-300'
+                    break;
+                case 'active':
+                    style = 'text-emerald-500'
+                    break;
+                case 'ended':
+                    style = 'text-yellow-300'
+                    break;
+            }
+
+            return style;
+        }
+    },
 }
 </script>
 
