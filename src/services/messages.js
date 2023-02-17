@@ -1,6 +1,7 @@
 const errors = {
     // all
     InvalidDataException: 'Um ou mais dados informados são inválidos.',
+    NotFoundException: 'Recurso não encontrado.',
 
     // auth
     LoginFailException: 'E-mail e/ou senha inválidos ou não existem.',
