@@ -7,8 +7,8 @@
             <div class="flex gap-2">
                 <DefaultButton @click="updateItem" size="small" variant="primary"
                     icon="bi bi-pencil-square" text="" />
-                <DefaultButton @click="deleteItem" size="small" variant="danger" outlined
-                    icon="bi bi-trash" text="" />
+                <DefaultButton v-if="deleteAction?.show" @click="deleteItem" size="small"
+                    variant="danger" outlined icon="bi bi-trash" text="" />
             </div>
         </div>
 
@@ -23,7 +23,7 @@
                 <div class="ml-auto">
                     <div class="flex gap-2">
                         <DefaultButton @click="deleteConfirm" size="small" variant="danger"
-                            icon="bi bi-check-lg" text="" />
+                            icon="bi bi-check-lg" text="" :loading="deleting" />
                         <DefaultButton @click="deleteCancel" size="small" variant="primary"
                             icon="bi bi-x" text="" />
                     </div>
@@ -43,11 +43,21 @@ export default {
         index: {
             type: Number,
             default: null
+        },
+        deleteAction: {
+            type: Object,
+            default: {
+                show: false,
+                action: null,
+                method: 'delete',
+                successCallback: null,
+            }
         }
     },
     data() {
         return {
-            status: 'show'
+            status: 'show',
+            deleting: false
         }
     },
     methods: {
@@ -60,8 +70,23 @@ export default {
             document.addEventListener("click", this.clickOutDeleteItemPopupListener);
         },
         deleteConfirm() {
-            // emit delete item event(list group remove this item from items array)
-            this.$emit('deleteItem', this.index);
+            if (this.deleteAction?.action) {
+                this.deleting = true;
+                this.$axios.request(this.deleteAction.action, {}, this.deleteAction.method).then((resp) => {
+                    this.$alerts.add({
+                        message: 'Item da lista excluído com sucesso',
+                        variant: 'success'
+                    });
+
+                    this.$emit('deleteItem', this.index);
+                }).catch((resp) => {
+                    // 
+                }).then(() => {
+                    this.deleting = false;
+                });
+            } else {
+                this.$emit('deleteItem', this.index);
+            }
         },
         deleteCancel() {
             this.status = 'show';

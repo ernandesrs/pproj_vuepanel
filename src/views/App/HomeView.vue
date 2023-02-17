@@ -1,9 +1,7 @@
 <template>
-    <div v-if="loadingContent" class="text-center animate-pulse">
-        <IconElem icon="bi bi-arrow-clockwise animate-spin text-4xl" />
-        <p class="text-lg">Aguarde...</p>
-    </div>
-    <div v-else class="flex justify-center gap-4">
+
+    <LoadingElem :loading="loadingContent" loading-text="Carregando..." />
+    <div v-if="!loadingContent" class="flex justify-center gap-4">
 
         <!-- subscriptions -->
         <div class="basis-1/2 lg:basis-1/3">
@@ -37,9 +35,10 @@
 import CardElem from '../../components/Card/CardElem.vue';
 import IconElem from '../../components/IconElem.vue';
 import LinkElem from '../../components/LinkElem.vue';
+import LoadingElem from '../../components/LoadingElem.vue';
 
 export default {
-    components: { IconElem, LinkElem, CardElem },
+    components: { IconElem, LinkElem, CardElem, LoadingElem },
     data() {
         return {
             loadingContent: true,

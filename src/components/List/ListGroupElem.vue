@@ -1,7 +1,11 @@
 <template>
     <div>
         <ListItem @deleteItem="deleteListItem" v-for="item, index in listItems" :key="item"
-            :item="item" :index="parseInt(index)">
+            :item="item" :index="parseInt(index)" :deleteAction="{
+                show: this.actions.delete.show,
+                action: this.actions.delete.action ? this.actions.delete.action.replace(':' + this.actions.delete.bindWith, item[this.actions.delete.bindWith]) : '',
+                method: this.actions.delete.method
+            }">
             <slot name="listItemContent" v-bind="{ item: item, index: index }" />
         </ListItem>
     </div>
@@ -17,6 +21,17 @@ export default {
         items: {
             type: [Array],
             default: []
+        },
+        actions: {
+            delete: {
+                type: Object,
+                default: {
+                    show: false,
+                    action: null,
+                    bindWith: 'id',
+                    method: 'delete'
+                }
+            }
         }
     },
     data() {
@@ -38,7 +53,7 @@ export default {
         deleteListItem(item) {
             this.listItems.splice(item, 1);
         }
-    },
+    }
 }
 
 </script>
