@@ -56,6 +56,8 @@ export default {
         },
         deleteItem() {
             this.status = 'delete';
+
+            document.addEventListener("click", this.clickOutDeleteItemPopupListener);
         },
         deleteConfirm() {
             // emit delete item event(list group remove this item from items array)
@@ -63,7 +65,14 @@ export default {
         },
         deleteCancel() {
             this.status = 'show';
+
+            document.removeEventListener("click", this.clickOutDeleteItemPopupListener);
         },
+        clickOutDeleteItemPopupListener(event) {
+            if (!this.$el.contains(event.target)) {
+                this.deleteCancel();
+            }
+        }
     },
 }
 
