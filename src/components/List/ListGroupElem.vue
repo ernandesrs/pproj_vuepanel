@@ -20,6 +20,10 @@
         <!-- /filter -->
     </div>
     <div>
+        <div v-if="filteredList ? filteredList.length === 0 : listItems.length === 0"
+            class="text-xl text-center py-6">
+            Nada para mostrar
+        </div>
         <ListItem @deleteItem="deleteListItem"
             v-for="item, index in (filteredList ?? listItems)" :key="item" :item="item"
             :index="parseInt(index)" :showActionButtons="itemActions.show">
