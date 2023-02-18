@@ -13,6 +13,9 @@
                     method: 'get',
                     callback: createCallback
                 }
+            },
+            filter: {
+                search_in: ['brand', 'last_digits', 'expiration_date']
             }
         }" :item-actions="{
     show: true

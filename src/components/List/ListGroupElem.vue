@@ -20,8 +20,9 @@
         <!-- /filter -->
     </div>
     <div>
-        <ListItem @deleteItem="deleteListItem" v-for="item, index in listItems" :key="item"
-            :item="item" :index="parseInt(index)" :showActionButtons="itemActions.show">
+        <ListItem @deleteItem="deleteListItem"
+            v-for="item, index in (filteredList ?? listItems)" :key="item" :item="item"
+            :index="parseInt(index)" :showActionButtons="itemActions.show">
             <slot name="listItemContent" v-bind="{ item: item, index: index }" />
         </ListItem>
     </div>
@@ -47,7 +48,8 @@ export default {
                 show: false,
                 filter: {
                     action: null,
-                    metohd: 'get'
+                    method: 'get',
+                    search_in: ['branch', 'last_digits']
                 },
                 buttons: {
                     create: {
@@ -69,6 +71,7 @@ export default {
     data() {
         return {
             listItems: this.items,
+            filteredList: null,
             createListItemRequesting: false,
             filterForm: {
                 search: null
@@ -132,7 +135,26 @@ export default {
             this.listItems.splice(item, 1);
         },
         filterList() {
-            console.log('filter list');
+            let filter = this.listActions?.filter;
+
+            if (!this.filterForm.search || !filter?.search_in) {
+                this.filteredList = null
+                return;
+            }
+
+            this.filteredList = this.listItems.filter(item => {
+                let flag = false;
+
+                filter.search_in.map(field => {
+                    if (item[field] ?? null) {
+                        if (item[field].includes(this.filterForm.search)) {
+                            flag = true;
+                        }
+                    }
+                });
+
+                return flag;
+            });
         }
     },
     computed: {
