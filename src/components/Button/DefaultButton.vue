@@ -1,5 +1,5 @@
 <template>
-    <LinkElem :icon="loading ? 'bi bi-arrow-clockwise animate-spin' : icon" :text="text"
+    <LinkElem :icon="loading ? 'loading' : icon" :text="text"
         class="button" :class="[
             (outlined ? 'button-outlined-' + variant : 'button-' + variant),
             ('button-' + size),
@@ -50,6 +50,7 @@ export default {
         }
     },
 }
+
 </script>
 
 <style lang="css" scoped>

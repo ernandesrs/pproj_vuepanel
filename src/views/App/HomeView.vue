@@ -18,7 +18,7 @@
                     <p class="text-sm" v-else>...</p>
                 </template>
                 <template v-slot:footer>
-                    <LinkElem icon="bi bi-clock" text="Histórico de assinaturas"
+                    <LinkElem icon="clock" text="Histórico de assinaturas"
                         :to="{ name: 'app.subscriptions' }" />
                 </template>
             </CardElem>

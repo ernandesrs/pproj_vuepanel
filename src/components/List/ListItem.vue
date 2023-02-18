@@ -7,9 +7,9 @@
         <div v-if="showActionButtons" class="ml-auto">
             <div class="flex gap-2">
                 <DefaultButton @click="updateItem" size="small" variant="primary"
-                    icon="bi bi-pencil-square" text="" />
+                    icon="pencilSquare" text="" />
                 <DefaultButton @click="deleteItem" size="small" variant="danger" outlined
-                    icon="bi bi-trash" text="" />
+                    icon="trash" text="" />
             </div>
         </div>
 
@@ -24,9 +24,9 @@
                 <div class="ml-auto">
                     <div class="flex gap-2">
                         <DefaultButton @click="deleteConfirm" size="small" variant="danger"
-                            icon="bi bi-check-lg" text="" :loading="deleting" />
+                            icon="checkLg" text="" :loading="deleting" />
                         <DefaultButton @click="deleteCancel" size="small" variant="primary"
-                            icon="bi bi-x" text="" />
+                            icon="x" text="" />
                     </div>
                 </div>
             </div>

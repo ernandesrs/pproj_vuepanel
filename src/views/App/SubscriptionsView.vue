@@ -44,7 +44,7 @@ export default {
     created() {
         this.$store.commit('addPageData', {
             title: 'Minhas assinaturas',
-            icon: 'bi bi-list',
+            icon: 'list',
         });
     },
     mounted() {

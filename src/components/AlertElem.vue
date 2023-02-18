@@ -7,7 +7,7 @@
                     {{ alert.message }}
                 </p>
                 <div @click="close" class="alert-close">
-                    <IconElem icon="bi bi-x-lg" />
+                    <IconElem icon="xLg" />
                 </div>
             </div>
         </div>

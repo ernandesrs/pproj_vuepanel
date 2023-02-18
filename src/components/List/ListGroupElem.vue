@@ -3,7 +3,7 @@
         <!-- buttons -->
         <div class="flex gap-2">
             <DefaultButton v-if="showCreateListItemButton" @click="createListItem" text="Novo"
-                icon="bi bi-plus-lg" variant="success" :loading="createListItemRequesting" />
+                icon="plusLg" variant="success" :loading="createListItemRequesting" />
         </div>
         <!-- /buttons -->
 
@@ -13,7 +13,7 @@
                 <div class="flex gap-1">
                     <InputGroupForm placeholder="Pesquisar por..."
                         v-model="filterForm.search" />
-                    <DefaultButton type="submit" icon="bi bi-search" text="" />
+                    <DefaultButton type="submit" icon="search" text="" />
                 </div>
             </form>
         </div>

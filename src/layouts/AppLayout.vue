@@ -32,29 +32,10 @@
         <main class="main">
             <section class="main-bar">
                 <button @click="sidebarToggle" class="text-xl" type="button">
-                    <IconElem icon="bi bi-list" />
+                    <IconElem icon="list" />
                 </button>
 
                 <div class="flex items-center ml-auto">
-                    <NavGroup class="mr-2" :items="[
-                        {
-                            text: 'Dashboard',
-                            title: 'Assinaturas',
-                            icon: 'bi bi-pie-chart',
-                            to: { name: 'app.home' },
-                            activeIn: ['app.home'],
-                            target: '_self'
-                        },
-                        {
-                            text: 'Assinaturas',
-                            title: 'Assinaturas',
-                            icon: 'bi bi-list',
-                            to: { name: 'app.subscriptions' },
-                            activeIn: ['app.subscriptions'],
-                            target: '_self'
-                        },
-                    ]" />
-
                     <!-- profile -->
                     <DropdownElem>
                         <!-- photo photo -->
@@ -85,7 +66,7 @@
                                     <LinkElem text="Perfil" :to="{ name: 'app.profile' }"
                                         class="px-3 py-1" />
                                     <LinkElem @click="logout" text="Logout"
-                                        :icon="`${logouting ? 'bi bi-arrow-clockwise animate-spin' : ''}`"
+                                        :icon="`${logouting ? 'loading' : ''}`"
                                         class="px-3 py-1 text-red-400" :loading="logouting" />
                                 </div>
                             </div>
@@ -96,7 +77,7 @@
 
             <div class="main-header">
                 <h1 class="text-xl md:text-2xl flex items-center">
-                    <IconElem :icon="$store.getters.getPageIcon ?? 'bi bi-app'" /><span
+                    <IconElem :icon="$store.getters.getPageIcon ?? 'app'" /><span
                         class="block ml-2">{{ $store.getters.getPageTitle }}</span>
                 </h1>
             </div>
@@ -131,7 +112,7 @@ export default {
                     {
                         text: 'Dashboard',
                         title: 'Dashboard',
-                        icon: 'bi bi-pie-chart',
+                        icon: 'pieChart',
                         to: { name: 'app.home' },
                         target: '_self',
                         activeIn: ['app.home']
@@ -139,7 +120,7 @@ export default {
                     {
                         text: 'Assinaturas',
                         title: 'Assinaturas',
-                        icon: 'bi bi-list',
+                        icon: 'list',
                         to: { name: 'app.subscriptions' },
                         target: '_self',
                         activeIn: ['app.subscriptions']
@@ -147,7 +128,7 @@ export default {
                     {
                         text: 'Cartões',
                         title: 'Cartões de credito',
-                        icon: 'bi bi-credit-card',
+                        icon: 'creditCard',
                         to: { name: 'app.credit-cards' },
                         target: '_self',
                         activeIn: ['app.credit-cards']
@@ -155,7 +136,7 @@ export default {
                     {
                         text: 'Perfil',
                         title: 'Perfil',
-                        icon: 'bi bi-person',
+                        icon: 'user',
                         to: { name: 'app.profile' },
                         target: '_self',
                         activeIn: ['app.profile'],
@@ -164,7 +145,7 @@ export default {
                     {
                         text: 'Sair',
                         title: 'Sair',
-                        icon: 'bi bi-box-arrow-left',
+                        icon: 'logout',
                         target: '_self',
                         a_class: 'text-red-500',
                         clickEvent: this.logout

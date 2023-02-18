@@ -58,7 +58,7 @@ export default {
     created() {
         this.$store.commit('addPageData', {
             title: 'Meus cartões',
-            icon: 'bi bi-credit-card',
+            icon: 'creditCard',
         });
     },
     mounted() {

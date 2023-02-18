@@ -8,9 +8,9 @@
             </p>
         </div>
         <div class="relative flex gap-1 pt-2">
-            <DefaultButton @click="uploadButtonClick" icon="bi bi-upload" variant="success"
+            <DefaultButton @click="uploadButtonClick" icon="upload" variant="success"
                 text="Nova foto" :loading="uploading" size="small" />
-            <DefaultButton @click="deleteButtonClick" v-if="form.photo_url" icon="bi bi-trash"
+            <DefaultButton @click="deleteButtonClick" v-if="form.photo_url" icon="trash"
                 variant="danger" text="Excluir foto" :loading="deleting" size="small"
                 outlined />
             <input @change="uploadPhoto" ref="inputPhotoUpload" type="file" class="hidden"
@@ -98,7 +98,7 @@
                 </div>
                 <div class="text-center">
                     <DefaultButton type="submit" text="Atualizar meus dados" variant="primary"
-                        icon="bi bi-check-lg" :loading="form.submitting" />
+                        icon="checkLg" :loading="form.submitting" />
                 </div>
             </FormElem>
         </div>
@@ -107,7 +107,6 @@
 
 <script>
 
-import messages from '../../services/messages';
 import InputGroupForm from '../../components/Form/InputGroupForm.vue';
 import FormElem from '../../components/Form/FormElem.vue';
 import DefaultButton from '../../components/Button/DefaultButton.vue';
@@ -128,11 +127,11 @@ export default {
     created() {
         this.$store.commit('addPageData', {
             title: 'Meu perfil',
-            icon: 'bi bi-person',
+            icon: 'user',
         });
     },
     methods: {
-        success(response) {
+        success() {
             this.form.errors = {};
             this.$alerts.add({
                 message: 'Seus dados foram atualizados com sucesso!',

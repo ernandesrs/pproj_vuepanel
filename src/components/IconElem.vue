@@ -3,17 +3,20 @@
 </template>
 
 <script>
+
+import icons from '../services/icons';
+
 export default {
     props: {
         icon: {
             type: String,
-            default: 'bi bi-app'
+            default: 'app'
         },
     },
 
     computed: {
         iconClass() {
-            return this.icon;
+            return icons.get(this.icon);
         }
     },
 }

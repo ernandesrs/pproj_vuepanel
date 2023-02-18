@@ -3,7 +3,7 @@
         <div @click="show = !show" class="flex items-center cursor-pointer py-3 z-50">
             <!-- profile photo -->
             <slot name="button" />
-            <IconElem class="ml-2 text-xs" icon="bi bi-chevron-down" />
+            <IconElem class="ml-2 text-xs" icon="chevronDown" />
         </div>
 
         <Transition enter-from-class="opacity-0 -translate-y-5"
