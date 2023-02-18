@@ -1,5 +1,6 @@
 <template>
-    <div class="flex items-center shadow px-3 py-3 mb-2 relative overflow-hidden hover:bg-dark-dark hover:bg-opacity-10 duration-200">
+    <div
+        class="flex items-center shadow px-3 py-2 mb-2 relative overflow-hidden hover:bg-dark-dark hover:bg-opacity-10 duration-200">
         <div>
             <slot />
         </div>
@@ -7,8 +8,8 @@
             <div class="flex gap-2">
                 <DefaultButton @click="updateItem" size="small" variant="primary"
                     icon="bi bi-pencil-square" text="" />
-                <DefaultButton @click="deleteItem" size="small"
-                    variant="danger" outlined icon="bi bi-trash" text="" />
+                <DefaultButton @click="deleteItem" size="small" variant="danger" outlined
+                    icon="bi bi-trash" text="" />
             </div>
         </div>
 
@@ -43,12 +44,16 @@ export default {
         index: {
             type: Number,
             default: null
+        },
+        showActionButtons: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
         return {
             status: 'show',
-            showActionButtons: false
+            deleting: false
         }
     },
     methods: {
@@ -62,6 +67,7 @@ export default {
         },
         deleteConfirm() {
             this.$emit('deleteItem', this.index);
+            this.deleting = true;
         },
         deleteCancel() {
             this.status = 'show';
