@@ -48,14 +48,17 @@ export default {
         });
     },
     mounted() {
-        this.$axios.request('/dash/subscriptions', {}, 'get').then((resp) => {
-            this.subscriptions = [
-                ...resp.data?.subscriptions
-            ];
-        }).catch((resp) => {
-            this.$alerts.addError(resp.response?.data?.error);
-        }).then(() => {
-            this.loadingContent = false;
+        this.$axios.req({
+            action: '/dash/subscriptions',
+            method: 'get',
+            success: (resp) => {
+                this.subscriptions = [
+                    ...resp.data?.subscriptions
+                ];
+            },
+            finally: () => {
+                this.loadingContent = false;
+            }
         });
     },
 }

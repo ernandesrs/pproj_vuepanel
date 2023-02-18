@@ -62,14 +62,16 @@ export default {
         });
     },
     mounted() {
-        this.$axios.request('/dash/credit-cards', {}, 'get').then((resp) => {
-            this.creditCards = [
-                ...resp.data?.cards
-            ];
-        }).catch((resp) => {
-            this.$alerts.addError(resp.response?.data?.error);
-        }).then(() => {
-            this.loadingContent = false;
+        this.$axios.req({
+            action: '/dash/credit-cards',
+            success: (response) => {
+                this.creditCards = [
+                    ...response.data?.cards
+                ];
+            },
+            finally: () => {
+                this.loadingContent = false;
+            }
         });
     },
     methods: {

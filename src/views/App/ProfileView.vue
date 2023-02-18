@@ -4,15 +4,15 @@
             class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 border-2 border-light-dark rounded-full flex items-center justify-center">
             <img v-if="form.photo_url" class="w-full h-full rounded-full"
                 :src="form.photo_url" :alt="form.first_name">
-            <p v-else class="text-4xl sm:text-5xl md:text-6xl"
-                v-html="form.first_name[0]"></p>
+            <p v-else class="text-4xl sm:text-5xl md:text-6xl" v-html="form.first_name[0]">
+            </p>
         </div>
         <div class="relative flex gap-1 pt-2">
-            <DefaultButton @click="uploadButtonClick" icon="bi bi-upload"
-                variant="success" text="Nova foto" :loading="uploading" size="small" />
-            <DefaultButton @click="deleteButtonClick" v-if="form.photo_url"
-                icon="bi bi-trash" variant="danger" text="Excluir foto"
-                :loading="deleting" size="small" outlined />
+            <DefaultButton @click="uploadButtonClick" icon="bi bi-upload" variant="success"
+                text="Nova foto" :loading="uploading" size="small" />
+            <DefaultButton @click="deleteButtonClick" v-if="form.photo_url" icon="bi bi-trash"
+                variant="danger" text="Excluir foto" :loading="deleting" size="small"
+                outlined />
             <input @change="uploadPhoto" ref="inputPhotoUpload" type="file" class="hidden"
                 accept="image/*" />
         </div>
@@ -97,9 +97,8 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <DefaultButton type="submit" text="Atualizar meus dados"
-                        variant="primary" icon="bi bi-check-lg"
-                        :loading="form.submitting" />
+                    <DefaultButton type="submit" text="Atualizar meus dados" variant="primary"
+                        icon="bi bi-check-lg" :loading="form.submitting" />
                 </div>
             </FormElem>
         </div>
@@ -150,21 +149,21 @@ export default {
 
             this.form.submitting = true;
             this.uploading = true;
-            this.$axios.request('/me/photo-upload', data, 'post').then((resp) => {
-                this.$alerts.add({
-                    message: 'Sua foto foi atualizada com sucesso!',
-                    variant: 'success'
-                });
-                this.form.photo_url = resp.data.user.photo_url;
-            }).catch((resp) => {
-                let msg = messages.get(resp?.response?.data?.error);
-                this.$alerts.add({
-                    message: msg,
-                    variant: 'danger'
-                });
-            }).then(() => {
-                this.form.submitting = false;
-                this.uploading = false;
+            this.$axios.req({
+                action: '/me/photo-upload',
+                data: data,
+                method: 'post',
+                success: (resp) => {
+                    this.$alerts.add({
+                        message: 'Sua foto foi atualizada com sucesso!',
+                        variant: 'success'
+                    });
+                    this.form.photo_url = resp.data.user.photo_url;
+                },
+                finally: () => {
+                    this.form.submitting = false;
+                    this.uploading = false;
+                }
             });
         },
         deleteButtonClick() {
@@ -173,17 +172,19 @@ export default {
             }
 
             this.deleting = true;
-            this.$axios.request('/me/photo-delete', {}, 'delete').then(() => {
-                this.form.photo_url = null;
-            }).catch(() => {
-            }).then(() => {
-                this.deleting = false;
+            this.$axios.req({
+                action: '/me/photo-delete',
+                method: 'delete',
+                success: () => {
+                    this.form.photo_url = null;
+                },
+                finally: () => {
+                    this.deleting = false;
+                }
             });
         }
     },
 }
 </script>
 
-<style lang="css" scoped>
-
-</style>
+<style lang="css" scoped></style>
