@@ -1,0 +1,60 @@
+<template>
+    <LoadingElem :loading="loadingContent" loading-text="Carregando..." />
+    <div v-if="!loadingContent">
+        <ListGroupElem :items="creditCards">
+            <template #listItemContent="{ item }">
+                <div class="py-2 gap-2 text-base font-semibold">
+                    #ID{{ item.id }} - {{ item.name ?? 'Cartão ' + item.brand }}
+                </div>
+
+                <div class="px-5">
+                    <div>
+                        <p>
+                            Número: {{ item.number }}
+                        </p>
+                    </div>
+
+                    <div class="flex justify-between gap-3">
+                        <p>Rede: {{ item.brand }}</p>
+                        <p>Validade: {{ item.expiration_date }}</p>
+                    </div>
+                </div>
+            </template>
+        </ListGroupElem>
+    </div>
+</template>
+
+<script>
+
+import ListGroupElem from '../../components/List/ListGroupElem.vue';
+import LoadingElem from '../../components/LoadingElem.vue';
+
+export default {
+    components: { LoadingElem, ListGroupElem },
+    data() {
+        return {
+            loadingContent: true,
+            creditCards: []
+        }
+    },
+    created() {
+        this.$store.commit('addPageData', {
+            title: 'Meus cartões',
+            icon: 'bi bi-credit-card',
+        });
+    },
+    mounted() {
+        this.$axios.request('/dash/credit-cards', {}, 'get').then((resp) => {
+            this.creditCards = [
+                ...resp.data?.cards
+            ];
+        }).catch((resp) => {
+            this.$alerts.addError(resp.response?.data?.error);
+        }).then(() => {
+            this.loadingContent = false;
+        });
+    },
+}
+</script>
+
+<style lang="css" scoped></style>

@@ -63,6 +63,11 @@ const router = createRouter({
           component: () => import('../views/App/SubscriptionsView.vue')
         },
         {
+          path: 'cartoes-de-creditos',
+          name: 'app.credit-cards',
+          component: () => import('../views/App/CreditCardsView.vue')
+        },
+        {
           path: 'perfil',
           name: 'app.profile',
           component: () => import('../views/App/ProfileView.vue')

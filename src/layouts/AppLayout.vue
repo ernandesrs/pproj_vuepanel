@@ -145,6 +145,14 @@ export default {
                         activeIn: ['app.subscriptions']
                     },
                     {
+                        text: 'Cartões',
+                        title: 'Cartões de credito',
+                        icon: 'bi bi-credit-card',
+                        to: { name: 'app.credit-cards' },
+                        target: '_self',
+                        activeIn: ['app.credit-cards']
+                    },
+                    {
                         text: 'Perfil',
                         title: 'Perfil',
                         icon: 'bi bi-person',
