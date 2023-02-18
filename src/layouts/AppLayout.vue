@@ -185,15 +185,18 @@ export default {
             }
 
             this.logouting = true;
-            this.$axios.request('/auth/logout', {}, 'get').then(() => {
-                token.remove();
-                this.$router.push({
-                    name: 'auth.login'
-                });
-            }).catch(() => {
-                // 
-            }).then(() => {
-                this.logouting = false;
+            this.$axios.req({
+                action: '/auth/logout',
+                method: 'get',
+                success: () => {
+                    token.remove();
+                    this.$router.push({
+                        name: 'auth.login'
+                    });
+                },
+                finally: () => {
+                    this.logouting = false;
+                }
             });
         }
     },
