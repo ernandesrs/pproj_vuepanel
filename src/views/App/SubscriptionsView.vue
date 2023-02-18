@@ -3,7 +3,26 @@
     <div v-if="!loadingContent">
         <ListGroupElem :items="subscriptions">
             <template #listItemContent="{ item }">
-                {{ item.starts_in }}
+                <div class="py-2 flex gap-2 subscription"
+                    :class="['subscription-' + item.status]">
+                    <div class="basis-3/4">
+                        <span class="px-2 text-xs status rounded-md">
+                            Status: {{ item.status }}
+                        </span>
+                    </div>
+                    <div class="basis-full">
+                        #ID{{ item.id }}
+                    </div>
+                </div>
+                <div class="text-sm text-light">
+                    <p>
+                        Assinatura: <span class="text-light-dark">{{ item.created_at }}</span>
+                    </p>
+                    <p>
+                        Período: <span class="text-light-dark">{{ item.starts_in }}</span> à
+                        <span class="text-light-dark">{{ item.ends_in }}</span>
+                    </p>
+                </div>
             </template>
         </ListGroupElem>
     </div>
@@ -19,67 +38,10 @@ export default {
     data() {
         return {
             loadingContent: true,
-            subscriptions: [
-                {
-                    id: 2091,
-                    created_at: '2023-01-07T15:10:25.000000Z',
-                    starts_in: '29/10/2022',
-                    ends_in: '29/11/2022',
-                    status: 'ended'
-                },
-                {
-                    id: 202,
-                    created_at: '2023-01-07T15:10:25.000000Z',
-                    starts_in: '29/10/2022',
-                    ends_in: '29/11/2022',
-                    status: 'canceled'
-                },
-                {
-                    id: 291,
-                    created_at: '2023-01-07T15:10:25.000000Z',
-                    starts_in: '29/10/2022',
-                    ends_in: '29/11/2022',
-                    status: 'ended'
-                },
-                {
-                    id: 231,
-                    created_at: '2023-01-07T15:10:25.000000Z',
-                    starts_in: '29/10/2022',
-                    ends_in: '29/11/2022',
-                    status: 'ended'
-                },
-                {
-                    id: 3112,
-                    created_at: '2023-01-07T15:10:25.000000Z',
-                    starts_in: '29/10/2022',
-                    ends_in: '29/11/2022',
-                    status: 'ended'
-                },
-                {
-                    id: 312,
-                    created_at: '2023-01-07T15:10:25.000000Z',
-                    starts_in: '29/10/2022',
-                    ends_in: '29/11/2022',
-                    status: 'ended'
-                },
-                {
-                    id: 904,
-                    created_at: '2023-01-07T15:10:25.000000Z',
-                    starts_in: '29/10/2022',
-                    ends_in: '29/11/2022',
-                    status: 'ended'
-                },
-                {
-                    id: 94,
-                    created_at: '2023-01-07T15:10:25.000000Z',
-                    starts_in: '29/10/2022',
-                    ends_in: '29/11/2022',
-                    status: 'ended'
-                }
-            ]
+            subscriptions: []
         }
     },
-    created () {
+    created() {
         this.$store.commit('addPageData', {
             title: 'Minhas assinaturas',
             icon: 'bi bi-list',
@@ -88,7 +50,6 @@ export default {
     mounted() {
         this.$axios.request('/dash/subscriptions', {}, 'get').then((resp) => {
             this.subscriptions = [
-                ...this.subscriptions,
                 ...resp.data?.subscriptions
             ];
         }).catch((resp) => {
@@ -100,4 +61,25 @@ export default {
 }
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.subscription .status {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.subscription-active .status {
+    @apply bg-emerald-600 text-emerald-50;
+}
+
+.subscription-pending .status {
+    @apply bg-sky-200 text-sky-700;
+}
+
+.subscription-ended .status {
+    @apply bg-yellow-200 text-yellow-700;
+}
+
+.subscription-canceled .status {
+    @apply bg-red-200 text-red-700;
+}
+</style>

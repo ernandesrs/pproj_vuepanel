@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center shadow px-3 py-3 mb-2 relative overflow-hidden">
+    <div class="flex items-center shadow px-3 py-3 mb-2 relative overflow-hidden hover:bg-dark-dark hover:bg-opacity-10 duration-200">
         <div>
             <slot />
         </div>
