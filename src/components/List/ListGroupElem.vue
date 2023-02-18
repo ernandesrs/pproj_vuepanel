@@ -1,9 +1,9 @@
 <template>
-    <div class="flex items-center pb-6">
+    <div v-if="listActions.show" class="flex items-center pb-6">
         <!-- buttons -->
         <div class="flex gap-2">
-            <DefaultButton @click="newListItem" text="Novo" icon="bi bi-plus-lg"
-                variant="success" />
+            <DefaultButton v-if="showCreateListItemButton" @click="createListItem" text="Novo"
+                icon="bi bi-plus-lg" variant="success" :loading="createListItemRequesting" />
         </div>
         <!-- /buttons -->
 
@@ -21,7 +21,7 @@
     </div>
     <div>
         <ListItem @deleteItem="deleteListItem" v-for="item, index in listItems" :key="item"
-            :item="item" :index="parseInt(index)" :showActionButtons="showActionButtons">
+            :item="item" :index="parseInt(index)" :showActionButtons="itemActions.show">
             <slot name="listItemContent" v-bind="{ item: item, index: index }" />
         </ListItem>
     </div>
@@ -35,19 +35,41 @@ import ListItem from './ListItem.vue';
 
 export default {
     components: { ListItem, DefaultButton, InputGroupForm },
+    emits: { createListItem: null },
     props: {
         items: {
             type: [Array],
             default: []
         },
-        showActionButtons: {
-            type: Boolean,
-            default: true
+        listActions: {
+            type: Object,
+            default: {
+                show: false,
+                filter: {
+                    action: null,
+                    metohd: 'get'
+                },
+                buttons: {
+                    create: {
+                        to: null,
+                        url: null,
+                        action: null,
+                        callback: null
+                    }
+                }
+            }
+        },
+        itemActions: {
+            type: Object,
+            default: {
+                show: false
+            }
         }
     },
     data() {
         return {
             listItems: this.items,
+            createListItemRequesting: false,
             filterForm: {
                 search: null
             }
@@ -64,8 +86,47 @@ export default {
         }
     },
     methods: {
-        newListItem() {
-            console.log('new list item');
+        createListItem(event) {
+            let createButton = this.listActions?.buttons?.create;
+            let promisse = null;
+
+            if (createButton.action) {
+                this.createListItemRequesting = true;
+                promisse = this.$axios.request(createButton.action, {}, createButton.method);
+            } else if (createButton.url) {
+                window.location.href = createButton.url;
+            } else if (createButton.to) {
+                this.$router.push(createButton.to);
+            }
+
+            if (promisse) {
+                promisse.then((resp) => {
+                    if (createButton?.callback) {
+                        createButton.callback({
+                            event: event,
+                            response: resp
+                        });
+                    }
+
+                    this.$emit('createListItem', {
+                        event: event,
+                        response: resp
+                    });
+                }).then(() => {
+                    this.createListItemRequesting = false;
+                });
+            } else {
+                if (createButton?.callback) {
+                    createButton.callback({
+                        event: event
+                    });
+                }
+
+                this.$emit('createListItem', {
+                    event: event
+                });
+            }
+
         },
         deleteListItem(item) {
             this.listItems.splice(item, 1);
@@ -73,7 +134,14 @@ export default {
         filterList() {
             console.log('filter list');
         }
-    }
+    },
+    computed: {
+        showCreateListItemButton() {
+            let createButton = this.listActions?.buttons?.create;
+
+            return !createButton ? false : (createButton.to || createButton.url || createButton.action || createButton.callback);
+        }
+    },
 }
 
 </script>

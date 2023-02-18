@@ -1,7 +1,22 @@
 <template>
     <LoadingElem :loading="loadingContent" loading-text="Carregando..." />
     <div v-if="!loadingContent">
-        <ListGroupElem :items="creditCards">
+        <ListGroupElem :items="creditCards" :list-actions="{
+            show: true,
+            buttons: {
+                create: {
+                    // to: {
+                    //     name: 'app.credit-cards'
+                    // },
+                    // url: 'https://www.google.com',
+                    // action: '/dash/subscriptions',
+                    method: 'get',
+                    callback: createCallback
+                }
+            }
+        }" :item-actions="{
+    show: true
+}">
             <template #listItemContent="{ item }">
                 <div class="py-2 gap-2 text-base font-semibold">
                     #ID{{ item.id }} - {{ item.name ?? 'Cartão ' + item.brand }}
@@ -53,6 +68,11 @@ export default {
         }).then(() => {
             this.loadingContent = false;
         });
+    },
+    methods: {
+        createCallback(r) {
+            console.log(r);
+        }
     },
 }
 </script>
