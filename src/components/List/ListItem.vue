@@ -3,11 +3,11 @@
         <div>
             <slot />
         </div>
-        <div class="ml-auto">
+        <div v-if="showActionButtons" class="ml-auto">
             <div class="flex gap-2">
                 <DefaultButton @click="updateItem" size="small" variant="primary"
                     icon="bi bi-pencil-square" text="" />
-                <DefaultButton v-if="deleteAction?.show" @click="deleteItem" size="small"
+                <DefaultButton @click="deleteItem" size="small"
                     variant="danger" outlined icon="bi bi-trash" text="" />
             </div>
         </div>
@@ -43,21 +43,12 @@ export default {
         index: {
             type: Number,
             default: null
-        },
-        deleteAction: {
-            type: Object,
-            default: {
-                show: false,
-                action: null,
-                method: 'delete',
-                successCallback: null,
-            }
         }
     },
     data() {
         return {
             status: 'show',
-            deleting: false
+            showActionButtons: false
         }
     },
     methods: {
@@ -70,23 +61,7 @@ export default {
             document.addEventListener("click", this.clickOutDeleteItemPopupListener);
         },
         deleteConfirm() {
-            if (this.deleteAction?.action) {
-                this.deleting = true;
-                this.$axios.request(this.deleteAction.action, {}, this.deleteAction.method).then((resp) => {
-                    this.$alerts.add({
-                        message: 'Item da lista excluído com sucesso',
-                        variant: 'success'
-                    });
-
-                    this.$emit('deleteItem', this.index);
-                }).catch((resp) => {
-                    // 
-                }).then(() => {
-                    this.deleting = false;
-                });
-            } else {
-                this.$emit('deleteItem', this.index);
-            }
+            this.$emit('deleteItem', this.index);
         },
         deleteCancel() {
             this.status = 'show';

@@ -1,14 +1,7 @@
 <template>
     <LoadingElem :loading="loadingContent" loading-text="Carregando..." />
     <div v-if="!loadingContent">
-        <ListGroupElem :items="subscriptions" :actions="{
-            delete: {
-                show: true,
-                action: null,
-                bindWith: null,
-                method: 'delete'
-            }
-        }">
+        <ListGroupElem :items="subscriptions">
             <template #listItemContent="{ item }">
                 {{ item.starts_in }}
             </template>
