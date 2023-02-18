@@ -4,8 +4,11 @@
         <LabelForm :for="attrs?.id" :text="label"
             :class="['custom-label', focused ? 'custom-label-focused' : 'custom-label-not-focused']" />
         <InputForm @focusin="inputFocusIn" @focusout="inputFocusOut"
-            :class="['custom-input', focused ? 'custom-input-focused' : '']"
-            v-model="value" v-bind="attrs" :options="options" />
+            :class="['custom-input', focused ? 'custom-input-focused' : '']" v-model="value"
+            v-bind="{
+                ...attrs,
+                placeholder: placeholder
+            }" :options="options" />
     </div>
     <small v-if="errorMessage" class="text-red-600" v-html="errorMessage"></small>
 </template>
@@ -23,6 +26,10 @@ export default {
             default: {}
         },
         label: {
+            type: String,
+            default: null
+        },
+        placeholder: {
             type: String,
             default: null
         },
@@ -93,7 +100,7 @@ export default {
 }
 
 .custom-input {
-    @apply relative z-10 w-full bg-transparent focus:outline-none -translate-y-1/2;
+    @apply relative z-10 w-full bg-transparent focus:outline-none;
 }
 
 .custom-input-focused {
