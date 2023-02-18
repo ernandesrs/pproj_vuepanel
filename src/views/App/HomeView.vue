@@ -1,5 +1,4 @@
 <template>
-
     <LoadingElem :loading="loadingContent" loading-text="Carregando..." />
     <div v-if="!loadingContent" class="flex justify-center gap-4">
 
@@ -48,6 +47,12 @@ export default {
             }
         };
     },
+    created() {
+        this.$store.commit('addPageData', {
+            title: '',
+            icon: '',
+        });
+    },
     mounted() {
         this.loadingContent = false;
     },
@@ -79,6 +84,4 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
-
-</style>
+<style lang="css" scoped></style>

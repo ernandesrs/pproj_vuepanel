@@ -126,6 +126,12 @@ export default {
             uploading: false,
         }
     },
+    created() {
+        this.$store.commit('addPageData', {
+            title: 'Meu perfil',
+            icon: 'bi bi-person',
+        });
+    },
     methods: {
         success(response) {
             this.form.errors = {};

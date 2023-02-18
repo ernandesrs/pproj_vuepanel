@@ -40,17 +40,39 @@ const store = createStore({
         pageSubtitle(state, subtitle) {
             state.page.subtitle = subtitle;
         },
+
+        addPageData(state, data = {
+            icon: null,
+            title: null,
+            subtitle: null
+        }) {
+            state.page = data;
+        }
     },
     getters: {
+        // auth user getters
         authUser: state => {
             return state.auth.user;
         },
         getAuthUser: state => {
             return state.auth.user;
         },
+
+        // message getters
         getMessage: state => {
             return state.message;
         },
+
+        // page getters
+        getPageIcon: state => {
+            return state.page.icon;
+        },
+        getPageTitle: state => {
+            return state.page.title;
+        },
+        getPageSubtitle: state => {
+            return state.page.subtitle;
+        }
     }
 })
 

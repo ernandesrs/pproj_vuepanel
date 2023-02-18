@@ -1,25 +1,22 @@
 <template>
-
     <div class="wrap">
         <!-- mobile sidebar backdrop -->
 
-        <Transition enter-from-class="opacity-0"
-            enter-active-class="duration-300 ease-in-out" leave-to-class="opacity-0"
-            leave-active-class="duration-100 ease-out">
+        <Transition enter-from-class="opacity-0" enter-active-class="duration-300 ease-in-out"
+            leave-to-class="opacity-0" leave-active-class="duration-100 ease-out">
             <div @click="sidebarToggle" v-if="sidebar.mobile && sidebar.show"
                 class="w-full h-screen z-40 bg-dark-dark bg-opacity-25 fixed top-0 left-0">
             </div>
         </Transition>
 
         <Transition enter-from-class="-translate-x-full"
-            enter-active-class="duration-300 ease-in-out"
-            leave-to-class="-translate-x-full" leave-active-class="duration-100 ease-out">
+            enter-active-class="duration-300 ease-in-out" leave-to-class="-translate-x-full"
+            leave-active-class="duration-100 ease-out">
             <aside v-show="sidebar.show" class="sidebar"
                 :class="{ 'sidebar-mobile': sidebar.mobile }">
 
                 <!-- header -->
-                <LinkElem class="flex flex-col items-center pb-3"
-                    :to="{ name: 'app.home' }">
+                <LinkElem class="flex flex-col items-center pb-3" :to="{ name: 'app.home' }">
                     <span
                         class="text-light-dark text-3xl font-bold tracking-wider">LAPI</span>
                     <span
@@ -89,8 +86,7 @@
                                         class="px-3 py-1" />
                                     <LinkElem @click="logout" text="Logout"
                                         :icon="`${logouting ? 'bi bi-arrow-clockwise animate-spin' : ''}`"
-                                        class="px-3 py-1 text-red-400"
-                                        :loading="logouting" />
+                                        class="px-3 py-1 text-red-400" :loading="logouting" />
                                 </div>
                             </div>
                         </template>
@@ -98,13 +94,19 @@
                 </div>
             </section>
 
+            <div class="main-header">
+                <h1 class="text-xl md:text-2xl flex items-center">
+                    <IconElem :icon="$store.getters.getPageIcon ?? 'bi bi-app'" /><span
+                        class="block ml-2">{{ $store.getters.getPageTitle }}</span>
+                </h1>
+            </div>
+
             <div class="main-content">
                 <AlertElem type="floating" />
                 <RouterView />
             </div>
         </main>
     </div>
-
 </template>
 
 <script>
@@ -233,6 +235,10 @@ export default {
 
 .main-bar {
     @apply mb-3 flex items-center;
+}
+
+.main-header {
+    @apply pb-6;
 }
 
 .main-content {

@@ -79,6 +79,12 @@ export default {
             ]
         }
     },
+    created () {
+        this.$store.commit('addPageData', {
+            title: 'Minhas assinaturas',
+            icon: 'bi bi-list',
+        });
+    },
     mounted() {
         this.$axios.request('/dash/subscriptions', {}, 'get').then((resp) => {
             this.subscriptions = [
