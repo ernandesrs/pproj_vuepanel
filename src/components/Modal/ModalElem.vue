@@ -60,6 +60,10 @@ export default {
             type: String,
             default: null
         },
+        hideOnClickOut: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
@@ -77,7 +81,9 @@ export default {
         },
         openedModal() {
             this.$emit('opened');
-            this.addClickOutMonitor();
+            if (this.hideOnClickOut) {
+                this.addClickOutMonitor();
+            }
         },
         closeModal() {
             this.showModal = false;
@@ -86,7 +92,10 @@ export default {
         closedModal() {
             this.$emit('closed');
             this.$emit('update:show');
-            this.removeClickOutMonitor();
+
+            if (this.hideOnClickOut) {
+                this.removeClickOutMonitor();
+            }
         },
 
         // click out
