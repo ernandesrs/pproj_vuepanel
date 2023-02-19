@@ -29,7 +29,16 @@
             :index="parseInt(index)" :showActionButtons="itemActions.show" :delete-action="{
                 ...itemActions?.delete,
                 action: itemActions?.delete?.action ? itemActions?.delete?.action.replace(':id', item.id) : null
-            }">
+            }" :edit-action="{
+    ...itemActions?.edit,
+    action: itemActions?.edit?.action ? itemActions.edit.action.replace(':id', item.id) : null,
+    to: itemActions?.edit?.to ? {
+        name: itemActions.edit.to.name,
+        params: {
+            id: item.id
+        }
+    } : null
+}">
             <slot name="listItemContent" v-bind="{ item: item, index: index }" />
         </ListItem>
     </div>

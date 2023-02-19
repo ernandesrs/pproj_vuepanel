@@ -19,6 +19,14 @@
             }
         }" :item-actions="{
     show: true,
+    edit: {
+        // to: {
+        //     name: 'app.credit-cards.edit'
+        // },
+        action: '/dash/credit-cards/:id',
+        method: 'get',
+        callback: editCallback
+    },
     delete: {
         action: '/dash/credit-cards/:id',
         method: 'delete',
@@ -83,6 +91,9 @@ export default {
     methods: {
         createCallback(r) {
             console.log('criar item: ', r);
+        },
+        editCallback(r) {
+            console.log('edit item: ', r);
         },
         deleteCallback() {
             console.log('deletou item');

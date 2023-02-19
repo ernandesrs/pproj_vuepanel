@@ -6,10 +6,10 @@
         </div>
         <div v-if="showActionButtons" class="ml-auto">
             <div class="flex gap-2">
-                <DefaultButton @click="updateItem" size="small" variant="primary"
-                    icon="pencilSquare" text="" />
+                <DefaultButton v-if="showEditButton" @click="editItem" size="small"
+                    variant="primary" icon="pencilSquare" text="" :loading="editing" />
                 <DefaultButton v-if="showDeleteButton" @click="deleteItem" size="small"
-                    variant="danger" outlined icon="trash" text="" />
+                    variant="danger" outlined icon="trash" text="" :disabled="editing" />
             </div>
         </div>
 
@@ -41,6 +41,10 @@ import DefaultButton from '../Button/DefaultButton.vue';
 export default {
     components: { DefaultButton, },
     props: {
+        item: {
+            type: Object,
+            default: {}
+        },
         index: {
             type: Number,
             default: null
@@ -48,6 +52,10 @@ export default {
         showActionButtons: {
             type: Boolean,
             default: false
+        },
+        editAction: {
+            type: Object,
+            default: {}
         },
         deleteAction: {
             type: Object,
@@ -57,12 +65,45 @@ export default {
     data() {
         return {
             status: 'show',
-            deleting: false
+            deleting: false,
+            editing: false
         }
     },
     methods: {
-        updateItem() {
+        editItem() {
             this.status = 'update';
+
+            if (this.editAction?.to) {
+                this.$router.push(this.editAction.to);
+                return;
+            }
+
+            if (this.editAction?.action) {
+                this.editing = true;
+                this.$axios.req({
+                    action: this.editAction.action,
+                    method: this.editAction?.method ?? 'get',
+                    success: (response) => {
+                        if (this.editAction?.callback) {
+                            this.editAction.callback(response);
+                        }
+
+                        this.$emit('editItem');
+                    },
+                    finally: () => {
+                        this.editing = false;
+                    }
+                });
+            } else {
+                this.$emit('editItem');
+                if (this.editAction?.callback) {
+                    this.editAction.callback({
+                        id: this.item?.id,
+                        index: this.index,
+                        item: this.item
+                    });
+                }
+            }
         },
         deleteItem() {
             this.status = 'delete';
@@ -112,6 +153,9 @@ export default {
         }
     },
     computed: {
+        showEditButton() {
+            return this.editAction ? this.editAction?.to || this.editAction?.action || this.editAction?.callback : false;
+        },
         showDeleteButton() {
             return this.deleteAction ? this.deleteAction?.action || this.deleteAction?.callback : false;
         }
