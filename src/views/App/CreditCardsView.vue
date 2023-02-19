@@ -18,7 +18,13 @@
                 search_in: ['brand', 'last_digits', 'expiration_date']
             }
         }" :item-actions="{
-    show: true
+    show: true,
+    delete: {
+        action: '/dash/credit-cards/:id',
+        method: 'delete',
+        // callback: deleteCallback,
+        confirmText: 'Excluir este cartão de crédito?'
+    }
 }">
             <template #listItemContent="{ item }">
                 <div class="py-2 gap-2 text-base font-semibold">
@@ -76,7 +82,10 @@ export default {
     },
     methods: {
         createCallback(r) {
-            console.log(r);
+            console.log('criar item: ', r);
+        },
+        deleteCallback() {
+            console.log('deletou item');
         }
     },
 }

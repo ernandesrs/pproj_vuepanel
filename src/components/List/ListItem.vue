@@ -8,8 +8,8 @@
             <div class="flex gap-2">
                 <DefaultButton @click="updateItem" size="small" variant="primary"
                     icon="pencilSquare" text="" />
-                <DefaultButton @click="deleteItem" size="small" variant="danger" outlined
-                    icon="trash" text="" />
+                <DefaultButton v-if="showDeleteButton" @click="deleteItem" size="small"
+                    variant="danger" outlined icon="trash" text="" />
             </div>
         </div>
 
@@ -19,7 +19,7 @@
             <div v-if="status === 'delete'"
                 class="bg-dark flex items-center h-full px-3 absolute top-0 right-0 shadow rounded-lg">
                 <div class="text-red-400 font-normal text-right w-full px-5">
-                    Excluir este item?
+                    {{ deleteAction?.confirmText ?? 'Excluir este item?' }}
                 </div>
                 <div class="ml-auto">
                     <div class="flex gap-2">
@@ -48,6 +48,10 @@ export default {
         showActionButtons: {
             type: Boolean,
             default: false
+        },
+        deleteAction: {
+            type: Object,
+            default: {}
         }
     },
     data() {
@@ -66,10 +70,37 @@ export default {
             document.addEventListener("click", this.clickOutDeleteItemPopupListener);
         },
         deleteConfirm() {
-            this.$emit('deleteItem', this.index);
             this.deleting = true;
+
+            if (this.deleteAction?.action) {
+                this.$axios.req({
+                    action: this.deleteAction?.action,
+                    method: this.deleteAction?.method,
+                    success: () => {
+                        if (this.deleteAction?.callback) {
+                            this.deleteAction?.callback({
+                                index: this.index,
+                                item: this.item
+                            });
+                        }
+
+                        this.$emit('deleteItem', this.index);
+                    },
+                    finally: () => {
+                        this.deleting = false;
+                        this.hiddenDeleteConfirmPopup();
+                    }
+                });
+            } else {
+                this.deleting = false;
+                this.$emit('deleteItem', this.index);
+                this.hiddenDeleteConfirmPopup();
+            }
         },
         deleteCancel() {
+            this.hiddenDeleteConfirmPopup();
+        },
+        hiddenDeleteConfirmPopup() {
             this.status = 'show';
 
             document.removeEventListener("click", this.clickOutDeleteItemPopupListener);
@@ -80,6 +111,11 @@ export default {
             }
         }
     },
+    computed: {
+        showDeleteButton() {
+            return this.deleteAction ? this.deleteAction?.action || this.deleteAction?.callback : false;
+        }
+    }
 }
 
 </script>

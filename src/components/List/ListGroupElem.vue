@@ -25,8 +25,11 @@
             Nada para mostrar
         </div>
         <ListItem @deleteItem="deleteListItem"
-            v-for="item, index in (filteredList ?? listItems)" :key="item" :item="item"
-            :index="parseInt(index)" :showActionButtons="itemActions.show">
+            v-for="item, index in (filteredList ?? listItems)" :key="index" :item="item"
+            :index="parseInt(index)" :showActionButtons="itemActions.show" :delete-action="{
+                ...itemActions?.delete,
+                action: itemActions?.delete?.action ? itemActions?.delete?.action.replace(':id', item.id) : null
+            }">
             <slot name="listItemContent" v-bind="{ item: item, index: index }" />
         </ListItem>
     </div>
@@ -40,7 +43,7 @@ import ListItem from './ListItem.vue';
 
 export default {
     components: { ListItem, DefaultButton, InputGroupForm },
-    emits: { createListItem: null },
+    emits: { createListItem: null, 'update:items': null },
     props: {
         items: {
             type: [Array],
