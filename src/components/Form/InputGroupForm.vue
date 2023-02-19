@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="['custom-input-group', focused ? 'custom-input-group-focused' : '', errorMessage ? 'custom-input-group-invalid' : '']">
+        :class="['custom-input-group', focused ? 'custom-input-group-focused' : '', errorMessage ? 'custom-input-group-invalid' : '', attrs?.disabled || attrs?.readonly ? 'custom-input-group-disabled' : '']">
         <LabelForm :for="attrs?.id" :text="label"
             :class="['custom-label', focused ? 'custom-label-focused' : 'custom-label-not-focused']" />
         <InputForm @focusin="inputFocusIn" @focusout="inputFocusOut"
@@ -76,6 +76,10 @@ export default {
 
 .custom-input-group-focused {
     @apply bg-gray-50;
+}
+
+.custom-input-group-disabled {
+    @apply bg-gray-300;
 }
 
 .custom-input-group-invalid {
