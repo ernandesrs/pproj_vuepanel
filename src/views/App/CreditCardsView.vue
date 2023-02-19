@@ -1,5 +1,10 @@
 <template>
     <LoadingElem :loading="loadingContent" loading-text="Carregando..." />
+
+    <ModalElem @closed="editCardModalClosed" :show="editCardModal.show" size="normal"
+        :title="editCardModal.title" position="top">
+    </ModalElem>
+
     <div v-if="!loadingContent">
         <ListGroupElem :items="creditCards" :list-actions="{
             show: true,
@@ -25,7 +30,7 @@
         // },
         action: '/dash/credit-cards/:id',
         method: 'get',
-        callback: editCallback
+        callback: editCardModalShow
     },
     delete: {
         action: '/dash/credit-cards/:id',
@@ -60,13 +65,19 @@
 
 import ListGroupElem from '../../components/List/ListGroupElem.vue';
 import LoadingElem from '../../components/LoadingElem.vue';
+import ModalElem from '../../components/Modal/ModalElem.vue';
 
 export default {
-    components: { LoadingElem, ListGroupElem },
+    components: { LoadingElem, ListGroupElem, ModalElem },
     data() {
         return {
             loadingContent: true,
-            creditCards: []
+            creditCards: [],
+            editCardModal: {
+                show: false,
+                title: null,
+                card: null,
+            }
         }
     },
     created() {
@@ -89,14 +100,18 @@ export default {
         });
     },
     methods: {
-        createCallback(r) {
-            console.log('criar item: ', r);
+        createCallback() {
+            this.editCardModal.show = true;
+            this.editCardModal.title = 'Novo cartão de crédito';
         },
-        editCallback(r) {
-            console.log('edit item: ', r);
+        editCardModalShow(response) {
+            this.editCardModal.show = true;
+            this.editCardModal.card = response.data.card;
+            this.editCardModal.title = 'Editar cartão final ' + this.editCardModal.card.last_digits;
         },
-        deleteCallback() {
-            console.log('deletou item');
+        editCardModalClosed() {
+            this.editCardModal.show = false;
+            this.editCardModal.card = null;
         }
     },
 }
