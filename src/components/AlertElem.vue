@@ -135,8 +135,9 @@ export default {
 }
 
 .alert-floating {
-    @apply fixed top-6 right-5 z-50 shadow-md max-w-xs;
+    @apply fixed top-6 right-5 shadow-md max-w-xs;
     width: calc(100% - 2.25rem);
+    z-index: 999
 }
 
 .alert-body {

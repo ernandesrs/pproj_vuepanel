@@ -3,45 +3,51 @@
 
     <ModalElem @closed="editCardModalClosed" :show="editCardModal.show" size="normal"
         :title="editCardModal.title" position="top">
-        <FormElem method="get" :data="editCardModal.card"
+        <FormElem
+            :action="editCardModal.card?.id ? '/dash/credit-cards/' + editCardModal.card.id : '/dash/credit-cards'"
+            :method="editCardModal.card?.id ? 'put' : 'post'" :data="editCardModal.card"
             :callbacks="{
                 success: (response) => {
-                    console.log(response);
-                },
-                finally: () => {
-                    console.log(899);
+                    if (editCardModal.card?.id) {
+                        // 
+                    } else {
+                        this.creditCards.unshift(response.data.card)
+                        this.editCardModal.show = false;
+                    }
                 }
             }">
             <div class="mb-3">
                 <InputGroupForm label="Nome para o cartão:"
-                    v-model="editCardModal.card.card_name" />
+                    v-model="editCardModal.card.card_name"
+                    :error-message="editCardModal.card.errors?.card_name" />
             </div>
 
             <div class="mb-3">
                 <InputGroupForm label="Cliente:" v-model="editCardModal.card.card_holder_name"
                     :attrs="{
                         disabled: editCardModal.card?.id ? true : false
-                    }" />
+                    }" :error-message="editCardModal.card.errors?.card_holder_name" />
             </div>
 
             <div class="mb-3">
                 <InputGroupForm label="Número:" v-model="editCardModal.card.card_number"
                     :attrs="{
                         disabled: editCardModal.card?.id ? true : false
-                    }" />
+                    }" :error-message="editCardModal.card.errors?.card_number" />
             </div>
 
             <div class="mb-3 flex gap-3">
                 <div class="basis-full md:basis-5/12">
                     <InputGroupForm label="CVV:" v-model="editCardModal.card.card_cvv" :attrs="{
                         disabled: editCardModal.card?.id ? true : false
-                    }" />
+                    }" :error-message="editCardModal.card.errors?.card_cvv" />
                 </div>
                 <div class="basis-full md:basis-7/12">
                     <InputGroupForm label="Data de validade:"
                         v-model="editCardModal.card.card_expiration_date" :attrs="{
                             disabled: editCardModal.card?.id ? true : false
-                        }" />
+                        }"
+                        :error-message="editCardModal.card.errors?.card_expiration_date" />
                 </div>
             </div>
 
