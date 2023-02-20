@@ -214,7 +214,7 @@ export default {
             });
         },
         sidebarClickLinkMonitor(event) {
-            if (this.$refs?.sidebar) {
+            if (this.$refs?.sidebar && this.sidebar.mobile) {
                 if (this.$refs.sidebar.contains(event.target)) {
                     if (['a', 'button'].includes(event.target.localName)) {
                         this.sidebarToggle();
