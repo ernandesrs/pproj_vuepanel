@@ -1,15 +1,15 @@
 <template>
-    <div v-if="listActions.show" class="flex items-center pb-6">
+    <div v-if="listActions.show" class="flex flex-col md:flex-row items-center pb-6">
         <!-- buttons -->
-        <div class="flex gap-2">
+        <div class="flex gap-2 w-full md:w-auto mb-3 md:mb-0">
             <DefaultButton v-if="showCreateListItemButton" @click="createListItem" text="Novo"
                 icon="plusLg" variant="success" :loading="createListItemRequesting" />
         </div>
         <!-- /buttons -->
 
         <!-- filter -->
-        <div class="ml-auto">
-            <form @submit.prevent="filterList">
+        <div class="md:ml-auto flex w-full md:w-auto">
+            <form class="w-full" @submit.prevent="filterList">
                 <div class="flex gap-1">
                     <InputGroupForm placeholder="Pesquisar por..."
                         v-model="filterForm.search" />
@@ -19,6 +19,7 @@
         </div>
         <!-- /filter -->
     </div>
+
     <div>
         <div v-if="filteredList ? filteredList.length === 0 : listItems.length === 0"
             class="text-xl text-center py-6">

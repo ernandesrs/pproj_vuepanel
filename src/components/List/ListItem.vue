@@ -1,10 +1,10 @@
 <template>
     <div
-        class="flex items-center shadow px-3 py-2 mb-2 relative overflow-hidden hover:bg-dark-dark hover:bg-opacity-10 duration-200">
-        <div>
+        class="flex flex-col sm:flex-row items-center shadow px-3 py-2 mb-3 relative overflow-hidden hover:bg-dark-dark hover:bg-opacity-10 duration-200">
+        <div class="mb-3 w-full sm:w-auto">
             <slot />
         </div>
-        <div v-if="showActionButtons" class="ml-auto">
+        <div v-if="showActionButtons" class="sm:ml-auto pb-2 sm:pb-0">
             <div class="flex gap-2">
                 <DefaultButton v-if="showEditButton" @click="editItem" size="small"
                     variant="primary" icon="pencilSquare" text="" :loading="editing" />
@@ -17,11 +17,11 @@
             enter-active-class="duration-300 ease-in-out" leave-to-class="translate-x-full"
             leave-active-class="duration-200 ease-out">
             <div v-if="status === 'delete'"
-                class="bg-dark flex items-center h-full px-3 absolute top-0 right-0 shadow rounded-lg">
-                <div class="text-red-400 font-normal text-right w-full px-5">
+                class="bg-dark flex flex-col sm:flex-row justify-center items-center w-full sm:w-auto h-full px-3 absolute top-0 right-0 shadow rounded-lg">
+                <div class="text-red-400 font-normal text-center sm:text-right w-full px-5 pb-3 sm:pb-0">
                     {{ deleteAction?.confirmText ?? 'Excluir este item?' }}
                 </div>
-                <div class="ml-auto">
+                <div class="sm:ml-auto">
                     <div class="flex gap-2">
                         <DefaultButton @click="deleteConfirm" size="small" variant="danger"
                             icon="checkLg" text="" :loading="deleting" />

@@ -71,7 +71,7 @@ export default {
 
 <style lang="css" scoped>
 .custom-input-group {
-    @apply flex flex-col justify-center bg-gray-100 border border-gray-400 py-1 px-4 rounded text-gray-600;
+    @apply flex flex-col w-full justify-center bg-gray-100 border border-gray-400 py-1 px-4 rounded text-gray-600;
 }
 
 .custom-input-group-focused {

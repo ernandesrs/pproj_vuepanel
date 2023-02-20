@@ -3,7 +3,7 @@
     <div v-if="!loadingContent" class="flex justify-center gap-4">
 
         <!-- subscriptions -->
-        <div class="basis-1/2 lg:basis-1/3">
+        <div class="basis-full sm:basis-1/2 lg:basis-1/3">
             <CardElem :title="`${{
                 undefined: 'Sem assinatura',
                 canceled: 'Assinatura cancelada',
