@@ -12,15 +12,15 @@
         <Transition enter-from-class="-translate-x-full"
             enter-active-class="duration-300 ease-in-out" leave-to-class="-translate-x-full"
             leave-active-class="duration-100 ease-out">
-            <aside v-show="sidebar.show" class="sidebar"
+            <aside ref="sidebar" v-show="sidebar.show" class="sidebar"
                 :class="{ 'sidebar-mobile': sidebar.mobile }">
 
                 <!-- header -->
                 <LinkElem class="flex flex-col items-center pb-3" :to="{ name: 'app.home' }">
                     <span
-                        class="text-light-dark text-3xl font-bold tracking-wider">LAPI</span>
+                        class="pointer-events-none text-light-dark text-3xl font-bold tracking-wider">LAPI</span>
                     <span
-                        class="text-lg text-light-light font-medium tracking-widest">ADMIN</span>
+                        class="pointer-events-none text-lg text-light-light font-medium tracking-widest">ADMIN</span>
                 </LinkElem>
 
                 <div class="bg-dark bg-opacity-25 rounded-lg px-4 py-4 h-full">
@@ -155,6 +155,20 @@ export default {
             logouting: false
         }
     },
+    watch: {
+        sidebar: {
+            deep: true,
+            handler(nv, ov) {
+                if (nv.show) {
+                    // add monitor sidebar link click
+                    document.addEventListener('click', this.sidebarClickLinkMonitor);
+                } else {
+                    // remove monitor sidebar link click
+                    document.removeEventListener('click', this.sidebarClickLinkMonitor);
+                }
+            }
+        }
+    },
     created() {
         if (window.innerWidth >= MOBILE_WIDTH) {
             this.sidebar.show = true;
@@ -198,6 +212,15 @@ export default {
                     this.logouting = false;
                 }
             });
+        },
+        sidebarClickLinkMonitor(event) {
+            if (this.$refs?.sidebar) {
+                if (this.$refs.sidebar.contains(event.target)) {
+                    if (['a', 'button'].includes(event.target.localName)) {
+                        this.sidebarToggle();
+                    }
+                }
+            }
         }
     },
 }
