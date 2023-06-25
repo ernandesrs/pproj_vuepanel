@@ -2,17 +2,16 @@
     <div v-if="listActions.show" class="flex flex-col md:flex-row items-center pb-6">
         <!-- buttons -->
         <div class="flex gap-2 w-full md:w-auto mb-3 md:mb-0">
-            <DefaultButton v-if="showCreateListItemButton" @click="createListItem" text="Novo"
-                icon="plusLg" variant="success" :loading="createListItemRequesting" />
+            <DefaultButton v-if="showCreateListItemButton" @click="createListItem" :text="getCreateButtonText" icon="plusLg"
+                variant="success" :loading="createListItemRequesting" />
         </div>
         <!-- /buttons -->
 
         <!-- filter -->
-        <div class="md:ml-auto flex w-full md:w-auto">
+        <div v-if="listActions?.filter?.action" class="md:ml-auto flex w-full md:w-auto">
             <form class="w-full" @submit.prevent="filterList">
                 <div class="flex gap-1">
-                    <InputGroupForm placeholder="Pesquisar por..."
-                        v-model="filterForm.search" />
+                    <InputGroupForm placeholder="Pesquisar por..." v-model="filterForm.search" />
                     <DefaultButton type="submit" icon="search" text="" />
                 </div>
             </form>
@@ -21,12 +20,10 @@
     </div>
 
     <div>
-        <div v-if="filteredList ? filteredList.length === 0 : listItems.length === 0"
-            class="text-xl text-center py-6">
+        <div v-if="filteredList ? filteredList.length === 0 : listItems.length === 0" class="text-xl text-center py-6">
             Nada para mostrar
         </div>
-        <ListItem @deleteItem="deleteListItem"
-            v-for="item, index in (filteredList ?? listItems)" :key="index" :item="item"
+        <ListItem @deleteItem="deleteListItem" v-for="item, index in (filteredList ?? listItems)" :key="index" :item="item"
             :index="parseInt(index)" :showActionButtons="itemActions.show" :delete-action="{
                 ...itemActions?.delete,
                 action: itemActions?.delete?.action ? itemActions?.delete?.action.replace(':id', item.id) : null
@@ -66,10 +63,11 @@ export default {
                 filter: {
                     action: null,
                     method: 'get',
-                    search_in: ['branch', 'last_digits']
+                    search_in: []
                 },
                 buttons: {
                     create: {
+                        text: 'Novo',
                         to: null,
                         url: null,
                         action: null,
@@ -179,6 +177,9 @@ export default {
             let createButton = this.listActions?.buttons?.create;
 
             return !createButton ? false : (createButton.to || createButton.url || createButton.action || createButton.callback);
+        },
+        getCreateButtonText() {
+            return this.listActions?.buttons?.create?.text ?? 'Novo';
         }
     },
 }

@@ -1,10 +1,18 @@
 <template>
     <LoadingElem :loading="loadingContent" loading-text="Carregando..." />
     <div v-if="!loadingContent">
-        <ListGroupElem :items="subscriptions">
+        <ListGroupElem :items="subscriptions" :list-actions="{
+            show: true,
+            buttons: {
+                create: {
+                    method: 'get',
+                    callback: createSubscriptionCallback,
+                    text: 'Assinar'
+                }
+            }
+        }">
             <template #listItemContent="{ item }">
-                <div class="py-2 flex gap-2 subscription"
-                    :class="['subscription-' + item.status]">
+                <div class="py-2 flex gap-2 subscription" :class="['subscription-' + item.status]">
                     <div class="basis-3/4">
                         <span class="px-2 text-xs status rounded-md">
                             Status: {{ item.status }}
@@ -38,7 +46,13 @@ export default {
     data() {
         return {
             loadingContent: true,
-            subscriptions: []
+            subscriptions: [],
+            subscription: {
+                errors: {},
+                submitting: false
+            },
+            hasActiveSubscription: false,
+            subscriptionModalShow: false
         }
     },
     created() {
@@ -55,12 +69,27 @@ export default {
                 this.subscriptions = [
                     ...resp.data?.subscriptions
                 ];
+
+                if (this.subscriptions[0] ?? null) {
+                    let sub = this.subscriptions[0];
+                    if (sub.status === 'active') {
+                        this.hasActiveSubscription = true;
+                    }
+                }
             },
             finally: () => {
                 this.loadingContent = false;
             }
         });
     },
+    methods: {
+        createSubscriptionCallback() {
+            // get cards list
+            // get packages list
+            // show modal with cards and packages
+            console.log("OPA");
+        }
+    }
 }
 </script>
 
