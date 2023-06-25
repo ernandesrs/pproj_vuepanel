@@ -12,14 +12,17 @@
                 ended: 'Assinatura vencida',
             }[activeSubscription?.status]}`" :titleClass="theTitleClass">
                 <template v-slot:content>
-                    <p class="text-sm" v-if="activeSubscription?.status == 'active'">Você
-                        possui uma assinatura válida até {{ activeSubscription.ends_in }}
-                    </p>
+                    <div class="text-sm" v-if="activeSubscription?.status == 'active'">
+                        <p class="pb-2">
+                            Você possui uma assinatura válida até {{ activeSubscription.ends_in }}
+                        </p>
+                        <DefaultButton @click="cancelSubscription" variant="danger" text="Cancelar assinatura" size="small"
+                            :loading="cancelingSubscription" />
+                    </div>
                     <p class="text-sm" v-else>...</p>
                 </template>
                 <template v-slot:footer>
-                    <LinkElem icon="clock" text="Histórico de assinaturas"
-                        :to="{ name: 'app.subscriptions' }" />
+                    <LinkElem icon="clock" text="Histórico de assinaturas" :to="{ name: 'app.subscriptions' }" />
                 </template>
             </CardElem>
         </div>
@@ -35,16 +38,18 @@ import CardElem from '../../components/Card/CardElem.vue';
 import IconElem from '../../components/IconElem.vue';
 import LinkElem from '../../components/LinkElem.vue';
 import LoadingElem from '../../components/LoadingElem.vue';
+import DefaultButton from '../../components/Button/DefaultButton.vue';
 
 export default {
-    components: { IconElem, LinkElem, CardElem, LoadingElem },
+    components: { IconElem, LinkElem, CardElem, LoadingElem, DefaultButton },
     data() {
         return {
             loadingContent: true,
             activeSubscription: {
                 status: 'active',
                 ends_in: '09/12/2023'
-            }
+            },
+            cancelingSubscription: false
         };
     },
     created() {
@@ -54,7 +59,35 @@ export default {
         });
     },
     mounted() {
-        this.loadingContent = false;
+        this.$axios.req({
+            action: '/dash/subscriptions/show/active',
+            method: 'get',
+            success: (resp) => {
+                this.activeSubscription = resp.data?.subscription
+            },
+            finally: () => {
+                this.loadingContent = false;
+            }
+        });
+    },
+    methods: {
+        cancelSubscription() {
+            let id = this.activeSubscription.id;
+
+            this.cancelingSubscription = true;
+            this.$axios.req({
+                action: '/dash/subscriptions/' + id + '/cancel',
+                method: 'patch',
+                success: (resp) => {
+                    if (resp.data?.success) {
+                        this.activeSubscription.status = resp.data?.subscription.status;
+                    }
+                },
+                finally: () => {
+                    this.cancelingSubscription = false;
+                }
+            });
+        }
     },
     computed: {
         theTitleClass() {
