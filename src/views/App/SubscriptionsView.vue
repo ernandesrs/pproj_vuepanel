@@ -1,12 +1,13 @@
 <template>
     <LoadingElem :loading="loadingContent" loading-text="Carregando..." />
+
     <div v-if="!loadingContent">
         <ListGroupElem :items="subscriptions" :list-actions="{
             show: true,
             buttons: {
                 create: {
                     method: 'get',
-                    callback: createSubscriptionCallback,
+                    callback: hasActiveSubscription ? null : createSubscriptionCallback,
                     text: 'Assinar'
                 }
             }
@@ -47,12 +48,7 @@ export default {
         return {
             loadingContent: true,
             subscriptions: [],
-            subscription: {
-                errors: {},
-                submitting: false
-            },
             hasActiveSubscription: false,
-            subscriptionModalShow: false
         }
     },
     created() {
@@ -81,14 +77,6 @@ export default {
                 this.loadingContent = false;
             }
         });
-    },
-    methods: {
-        createSubscriptionCallback() {
-            // get cards list
-            // get packages list
-            // show modal with cards and packages
-            console.log("OPA");
-        }
     }
 }
 </script>
@@ -113,5 +101,4 @@ export default {
 
 .subscription-canceled .status {
     @apply bg-red-200 text-red-700;
-}
-</style>
+}</style>

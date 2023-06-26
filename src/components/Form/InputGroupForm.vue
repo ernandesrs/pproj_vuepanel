@@ -34,7 +34,7 @@ export default {
             default: null
         },
         modelValue: {
-            type: String,
+            type: [String, Number, null],
             default: null
         },
         errorMessage: {
