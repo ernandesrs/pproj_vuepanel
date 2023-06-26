@@ -63,6 +63,11 @@ const router = createRouter({
           component: () => import('../views/App/SubscriptionsView.vue')
         },
         {
+          path: 'assinaturas/nova-assinatura',
+          name: 'app.subscriptions.new',
+          component: () => import('../views/App/SubscriptionNewView.vue')
+        },
+        {
           path: 'cartoes-de-creditos',
           name: 'app.credit-cards',
           component: () => import('../views/App/CreditCardsView.vue')

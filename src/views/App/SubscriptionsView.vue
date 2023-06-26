@@ -7,7 +7,9 @@
             buttons: {
                 create: {
                     method: 'get',
-                    callback: hasActiveSubscription ? null : createSubscriptionCallback,
+                    to: hasActiveSubscription ? null : {
+                        name: 'app.subscriptions.new'
+                    },
                     text: 'Assinar'
                 }
             }

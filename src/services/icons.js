@@ -2,6 +2,8 @@ const icons = {
     app: 'bi bi-app',
     appIndicator: 'bi bi-app-indicator',
 
+    cartPlus: 'bi bi-cart-plus',
+
     checkLg: 'bi bi-check-lg',
     chevronUp: 'bi bi-chevron-up',
     chevronDown: 'bi bi-chevron-down',

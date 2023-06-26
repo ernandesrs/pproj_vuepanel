@@ -3,7 +3,7 @@
         <!-- buttons -->
         <div class="flex gap-2 w-full md:w-auto mb-3 md:mb-0">
             <DefaultButton v-if="showCreateListItemButton" @click="createListItem" :text="getCreateButtonText" icon="plusLg"
-                variant="success" :loading="createListItemRequesting" />
+                variant="success" :loading="createListItemRequesting" :to="listActions.buttons.create?.to" :url="listActions.buttons.create?.url" :target="listActions.buttons.create?.target" />
         </div>
         <!-- /buttons -->
 
@@ -70,6 +70,7 @@ export default {
                         text: 'Novo',
                         to: null,
                         url: null,
+                        target: '_self',
                         action: null,
                         callback: null
                     }

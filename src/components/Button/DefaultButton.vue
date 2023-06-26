@@ -4,7 +4,7 @@
             (outlined ? 'button-outlined-' + variant : 'button-' + variant),
             ('button-' + size),
             (loading ? 'animate-pulse' : '')
-        ]" :disabled="disabled || loading" :type="type" />
+        ]" :disabled="disabled || loading" :type="type" :to="to" :url="url" :target="target" />
 </template>
 
 <script>
@@ -47,6 +47,18 @@ export default {
         outlined: {
             type: Boolean,
             default: false
+        },
+        to: {
+            type: Object,
+            default: null
+        },
+        url: {
+            type: String,
+            default: null
+        },
+        target: {
+            type: String,
+            default: '_self'
         }
     },
 }
