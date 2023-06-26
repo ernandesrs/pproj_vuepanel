@@ -9,8 +9,8 @@
         <div class="py-3">
             <slot name="content" />
         </div>
-        <div class="border-t border-dark border-opacity-25"></div>
-        <div class="py-2">
+        <div v-if="$slots.footer" class="border-t border-dark border-opacity-25"></div>
+        <div v-if="$slots.footer" class="py-2">
             <slot name="footer" />
         </div>
     </div>
