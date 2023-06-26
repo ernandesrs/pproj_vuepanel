@@ -2,25 +2,21 @@
     <div class="wrap">
         <!-- mobile sidebar backdrop -->
 
-        <Transition enter-from-class="opacity-0" enter-active-class="duration-300 ease-in-out"
-            leave-to-class="opacity-0" leave-active-class="duration-100 ease-out">
+        <Transition enter-from-class="opacity-0" enter-active-class="duration-300 ease-in-out" leave-to-class="opacity-0"
+            leave-active-class="duration-100 ease-out">
             <div @click="sidebarToggle" v-if="sidebar.mobile && sidebar.show"
                 class="w-full h-screen z-40 bg-dark-dark bg-opacity-25 fixed top-0 left-0">
             </div>
         </Transition>
 
-        <Transition enter-from-class="-translate-x-full"
-            enter-active-class="duration-300 ease-in-out" leave-to-class="-translate-x-full"
-            leave-active-class="duration-100 ease-out">
-            <aside ref="sidebar" v-show="sidebar.show" class="sidebar"
-                :class="{ 'sidebar-mobile': sidebar.mobile }">
+        <Transition enter-from-class="-translate-x-full" enter-active-class="duration-300 ease-in-out"
+            leave-to-class="-translate-x-full" leave-active-class="duration-100 ease-out">
+            <aside ref="sidebar" v-show="sidebar.show" class="sidebar" :class="{ 'sidebar-mobile': sidebar.mobile }">
 
                 <!-- header -->
                 <LinkElem class="flex flex-col items-center pb-3" :to="{ name: 'app.home' }">
-                    <span
-                        class="pointer-events-none text-light-dark text-3xl font-bold tracking-wider">LAPI</span>
-                    <span
-                        class="pointer-events-none text-lg text-light-light font-medium tracking-widest">ADMIN</span>
+                    <span class="pointer-events-none text-light-dark text-3xl font-bold tracking-wider">LAPI</span>
+                    <span class="pointer-events-none text-lg text-light-light font-medium tracking-widest">ADMIN</span>
                 </LinkElem>
 
                 <div class="bg-dark bg-opacity-25 rounded-lg px-4 py-4 h-full">
@@ -40,8 +36,7 @@
                     <DropdownElem>
                         <!-- photo photo -->
                         <template v-slot:button>
-                            <div
-                                class="border px-2 w-7 h-7 rounded-full flex items-center justify-center overflow-hidden">
+                            <div class="border px-2 w-7 h-7 rounded-full flex items-center justify-center overflow-hidden">
                                 E
                             </div>
                         </template>
@@ -63,10 +58,8 @@
                                 </div>
 
                                 <div class="pb-2 flex justify-center text-base">
-                                    <LinkElem text="Perfil" :to="{ name: 'app.profile' }"
-                                        class="px-3 py-1" />
-                                    <LinkElem @click="logout" text="Logout"
-                                        :icon="`${logouting ? 'loading' : ''}`"
+                                    <LinkElem text="Perfil" :to="{ name: 'app.profile' }" class="px-3 py-1" />
+                                    <LinkElem @click="logout" text="Logout" :icon="`${logouting ? 'loading' : ''}`"
                                         class="px-3 py-1 text-red-400" :loading="logouting" />
                                 </div>
                             </div>
@@ -77,8 +70,8 @@
 
             <div class="main-header">
                 <h1 class="text-xl md:text-2xl flex items-center">
-                    <IconElem :icon="$store.getters.getPageIcon ?? 'app'" /><span
-                        class="block ml-2">{{ $store.getters.getPageTitle }}</span>
+                    <IconElem :icon="$store.getters.getPageIcon ?? 'app'" /><span class="block ml-2">{{
+                        $store.getters.getPageTitle }}</span>
                 </h1>
             </div>
 
@@ -123,7 +116,7 @@ export default {
                         icon: 'list',
                         to: { name: 'app.subscriptions' },
                         target: '_self',
-                        activeIn: ['app.subscriptions']
+                        activeIn: ['app.subscriptions', 'app.subscriptions.new']
                     },
                     {
                         text: 'Cartões',
